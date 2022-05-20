@@ -52,20 +52,6 @@
                             Width="auto"
                 Orientation="Horizontal"
                     HorizontalAlignment="Center">
-                        <!--<Button
-                            x:Name="btn_Back" 
-                            Margin="5"
-                            Command="{StaticResource GoBack}"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            Background="{x:Null}" 
-                            BorderBrush="{x:Null}" >
-                            <materialDesign:PackIcon 
-                            Foreground="#000000"
-                            Kind="ArrowBack"
-                            Width="25"
-                            Height="25"/>
-                        </Button>-->
                         <TextBlock
                     Style="{StaticResource MaterialDesignHeadline4TextBlock}"
                             FontWeight="Medium"

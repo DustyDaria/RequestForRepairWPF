@@ -14,6 +14,9 @@ using System.Windows.Forms;
 
 namespace RequestForRepairWPF.Infrastructure.Commands
 {
+    /// <summary>
+    /// Команда выхода из профиля (необходима доработка подтверждения)
+    /// </summary>
     public class LogOut : Command
     {
         public override bool CanExecute(object parameter) => true;

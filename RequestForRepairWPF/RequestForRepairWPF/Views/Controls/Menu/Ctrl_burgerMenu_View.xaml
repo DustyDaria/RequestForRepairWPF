@@ -23,7 +23,6 @@
     </i:Interaction.Triggers>
 
     <UserControl.Resources>
-
         <services:BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
 
         <Storyboard x:Key="MenuOpen">
@@ -70,7 +69,7 @@
     <Grid x:Name="GridMenu" 
             Width="70" 
             HorizontalAlignment="Left" 
-            Background="#002984">
+            Background="#4caf50">
         <StackPanel>
             <Grid 
                     Height="150" 
@@ -108,7 +107,7 @@
                 </Button>
             </Grid>
             <ListView 
-                    Foreground="#ffc246"
+                    Foreground="#000000"
                     FontSize="16"
                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                     ScrollViewer.VerticalScrollBarVisibility="Disabled">

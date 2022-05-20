@@ -319,6 +319,10 @@
     <Compile Include="Views\Pages\UserAccount\UserAccountPage_View.xaml.cs">
       <DependentUpon>UserAccountPage_View.xaml</DependentUpon>
     </Compile>
+    <Page Include="DictionaryStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Controls\Menu\Ctrl_burgerMenu_View.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

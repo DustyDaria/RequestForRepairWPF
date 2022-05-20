@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace RequestForRepairWPF.Infrastructure.Commands
 {
+    /// <summary>
+    /// Команда возврата на предыдущую страницу (не используется)
+    /// </summary>
     public class GoBack : Command
     {
         public override bool CanExecute(object parameter) => true;
