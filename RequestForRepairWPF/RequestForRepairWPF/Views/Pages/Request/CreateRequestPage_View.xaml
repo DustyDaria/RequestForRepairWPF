@@ -1,0 +1,334 @@
+﻿<Page x:Class="RequestForRepairWPF.Views.Pages.Request.CreateRequestPage_View"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ctrlm="clr-namespace:RequestForRepairWPF.Views.Controls.Menu" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RequestForRepairWPF"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib" 
+      xmlns:vm="clr-namespace:RequestForRepairWPF.ViewModels.Pages.Request"
+      mc:Ignorable="d"
+        
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="20"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        d:DesignHeight="800" d:DesignWidth="1080"
+      
+      Title="Создание заявки">
+    <Page.DataContext>
+        <vm:CreateRequest_ViewModel/>
+    </Page.DataContext>
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding Path=LoadRequestDataCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+
+    <Grid>
+
+        <!-- Контент -->
+        <ScrollViewer
+                x:Name="scroll"
+                CanContentScroll="True"
+                VerticalScrollBarVisibility="Visible">
+
+            <Grid 
+                    Height="auto">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <TextBlock
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                    x:Name="label_Header"
+                    Margin="100 25 100 25"
+                    Text="Создание заявки (не закончено)"
+                    Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                    FontWeight="DemiBold">
+                </TextBlock>
+
+                <TextBox
+                    x:Name="textBox_name_request"
+                    Margin="100 25 25 25"
+                    Grid.Column="0"
+                    Grid.Row="1"
+                    MaxLength="50"
+                    Text="{Binding Path=NameRequest}"
+                    Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                    VerticalAlignment="Top"
+                    materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource SecondaryHueMidBrush}"
+                    materialDesign:HintAssist.Foreground="{DynamicResource SecondaryHueMidBrush}"
+                    materialDesign:HintAssist.Hint="Название"/>
+
+                <TextBox
+                    x:Name="textBox_description_request"
+                    Margin="100 25 25 25"
+                    Grid.Column="0"
+                    Grid.Row="2"
+                            Grid.RowSpan="2"
+                            Height="200"
+                    MaxLength="1000"
+                    Text="{Binding Path=DescriptionRequest}"
+                    Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                    VerticalAlignment="Top"
+                            TextWrapping="Wrap"
+                    materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource SecondaryHueMidBrush}"
+                    materialDesign:HintAssist.Foreground="{DynamicResource SecondaryHueMidBrush}"
+                    materialDesign:HintAssist.Hint="Описание" />
+
+                <TextBox
+                    x:Name="textBox_comment_request"
+                    Margin="100 25 25 25"
+                    Grid.Column="0"
+                    Grid.Row="4"
+                    Text="{Binding Path=CommentRequest}"
+                            Grid.RowSpan="2"
+                            Height="200"
+                            TextWrapping="Wrap"
+                    MaxLength="300"
+                    materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource PrimaryHueMidBrush}"
+                    materialDesign:HintAssist.Foreground="{DynamicResource PrimaryHueMidBrush}"
+                    Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                    VerticalAlignment="Top"
+                    materialDesign:HintAssist.Hint="Комментарий" />
+
+                <GroupBox
+                    x:Name="groupBox_status_request"
+                    Margin="100 25 25 25"
+                    Grid.Column="0"
+                    Grid.Row="6"
+                    IsEnabled="False"
+                    
+                          Header="Текущий статус заявки"
+                          Style="{DynamicResource MaterialDesignCardGroupBox}"
+                            materialDesign:ColorZoneAssist.Mode="Accent">
+                    <GroupBox.HeaderTemplate>
+                        <DataTemplate>
+                            <StackPanel
+                                    Orientation="Horizontal">
+                                <materialDesign:PackIcon
+                                          Kind="ListStatus"
+                                          Height="32"
+                                          Width="32"
+                                          VerticalAlignment="Center" />
+                                <TextBlock
+                                          Margin="8,0,0,0"
+                                          VerticalAlignment="Center"
+                                          Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                                          Text="{Binding}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </GroupBox.HeaderTemplate>
+
+                    <StackPanel
+                                Orientation="Vertical">
+
+                        <RadioButton
+                                Margin="5"
+                                GroupName="statusRequest"
+                                x:Name="radioButton_OnModeration"
+                              Style="{StaticResource MaterialDesignAccentRadioButton}"
+                              Content="На модерации"/>
+                        <RadioButton
+                                Margin="5"
+                                GroupName="statusRequest"
+                                x:Name="radioButton_ModerationIsNotPassed"
+                              Style="{StaticResource MaterialDesignAccentRadioButton}"
+                              Content="Модерация не пройдена"/>
+                        <RadioButton
+                                Margin="5"
+                                GroupName="statusRequest"
+                                x:Name="radioButton_Waiting"
+                              Style="{StaticResource MaterialDesignAccentRadioButton}"
+                              Content="Ждет выполнения" />
+                        <RadioButton
+                                Margin="5"
+                                GroupName="statusRequest"
+                                x:Name="radioButton_WorkIsCompleted"
+                              Style="{StaticResource MaterialDesignAccentRadioButton}"
+                              Content="Работа выполнена" />
+                        <RadioButton
+                                Margin="5"
+                                GroupName="statusRequest"
+                                x:Name="radioButton_AcceptedForWork"
+                              Style="{StaticResource MaterialDesignAccentRadioButton}"
+                              Content="Принято в работу" />
+                        <RadioButton
+                                Margin="5"
+                                GroupName="statusRequest"
+                                x:Name="radioButton_ReturnToWork"
+                              Style="{StaticResource MaterialDesignAccentRadioButton}"
+                              Content="Возврат в работу" />
+                        <RadioButton
+                                Margin="5"
+                                GroupName="statusRequest"
+                                x:Name="radioButton_Finished"
+                              Style="{StaticResource MaterialDesignAccentRadioButton}"
+                              Content="Завершено" />
+                        <RadioButton
+                                Margin="5"
+                                GroupName="statusRequest" 
+                                x:Name="radioButton_InTheArchive"
+                              Style="{StaticResource MaterialDesignAccentRadioButton}"
+                              Content="В архиве" />
+
+                    </StackPanel>
+                </GroupBox>
+
+                <ComboBox
+                    x:Name="comboBox_room_number"
+                    VerticalAlignment="Top"
+                    
+                    Margin="25"
+                    Grid.Column="1"
+                    Grid.Row="1"
+                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                    materialDesign:TextFieldAssist.HasClearButton="True"
+                    materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource SecondaryHueMidBrush}"
+                    materialDesign:ColorZoneAssist.Mode="Accent"
+                    materialDesign:HintAssist.Hint="Номер помещения"
+                    materialDesign:HintAssist.Foreground="{DynamicResource SecondaryHueMidBrush}"
+                    materialDesign:HintAssist.HelperText="«Прости, Джо в сделку не входил»"
+                    MinWidth="128"
+                    Height="50"
+                    ItemsSource="{Binding Path=ListRoomsNumber}"
+                    SelectedItem="{Binding Path=RoomNumberRequest}"/>
+
+                <TextBox
+                    x:Name="textBox_inventory_number"
+                    Margin="25 25 25 25"
+                    Grid.Column="1"
+                    Grid.Row="2"
+                    MaxLength="50"
+                    Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                    VerticalAlignment="Top"
+                    materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource PrimaryHueMidBrush}"
+                    materialDesign:HintAssist.Foreground="{DynamicResource PrimaryHueMidBrush}"
+                    materialDesign:HintAssist.Hint="Инвентарный номер ремонтируемого объекта"/>
+
+                <DatePicker
+                            x:Name="dateTime_Start"
+                            Grid.Column="1"
+                            Grid.Row="3"
+                            Margin="25 25 25 25"
+                            VerticalAlignment="Top"
+                            SelectedDate="{Binding Path=DateStart}"
+                    DisplayDateStart="{x:Static sys:DateTime.Now}"
+                          materialDesign:HintAssist.Hint="Дата начала (по умолчанию)"
+                          Style="{StaticResource MaterialDesignOutlinedDatePicker}"/>
+
+                <DatePicker
+                            x:Name="dateTime_End"
+                            Grid.Column="1"
+                            Grid.Row="4"
+                            Margin="25 25 25 25"
+                            VerticalAlignment="Top"
+                    SelectedDate="{Binding Path=DateEnd}"
+                    DisplayDateStart="{x:Static sys:DateTime.Now}"
+                          materialDesign:HintAssist.Hint="Дата окончания (по умолчанию)"
+                          Style="{StaticResource MaterialDesignOutlinedDatePicker}" />
+
+                <ComboBox
+                    x:Name="comboBox_category_request"
+                    VerticalAlignment="Top"
+                    
+                    Margin="25"
+                    Grid.Column="1"
+                    Grid.Row="5"
+                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                    materialDesign:TextFieldAssist.HasClearButton="True"
+                    materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource SecondaryHueMidBrush}"
+                    materialDesign:ColorZoneAssist.Mode="Accent"
+                    materialDesign:HintAssist.Hint="Категория работ"
+                    materialDesign:HintAssist.Foreground="{DynamicResource SecondaryHueMidBrush}"
+                    materialDesign:HintAssist.HelperText="«Не спеши, выбирай с умом»"
+                    MinWidth="128"
+                    Height="50"
+                    ItemsSource="{Binding Path=ListCategoryRequest}"
+                    SelectedItem="{Binding Path=CategoryRequest}">
+                </ComboBox>
+                
+                <Button
+                    x:Name="btn_Save"
+                    FontSize="20"
+                    Height="70"
+                    Width="200"
+                    Padding="25 10 25 10"
+                    Margin="25"
+                    HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                    Grid.Column="1"
+                    Grid.Row="6"
+                    Content="Сохранить"
+                    Command="{Binding Path=SaveRequestDataCommand}"
+                    Style="{StaticResource MaterialDesignRaisedAccentButton}"
+                    ToolTip="Resource name: MaterialDesignRaisedAccentButton">
+                </Button>
+
+                <Button
+                    x:Name="btn_Cancel"
+                    FontSize="20"
+                    Height="70"
+                    Width="200"
+                    Padding="25 10 25 10"
+                    Margin="25"
+                    HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                    Grid.Column="1"
+                    Grid.Row="6"
+                    Content="Отмена"
+                    Style="{StaticResource MaterialDesignFlatButton}"
+                    ToolTip="MaterialDesignFlatButton">
+                </Button>
+
+                <!--<Button
+                    x:Name="btn_Edit"
+                            Click="btn_Edit_Click"
+                    FontSize="20"
+                    Height="70"
+                    Width="200"
+                    Padding="25 10 25 10"
+                    Margin="25 25 25 25"
+                    HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                    Grid.Column="1"
+                    Grid.Row="6"
+                    Content="Редактировать"
+                    Style="{StaticResource MaterialDesignRaisedLightButton}"
+                    ToolTip="Resource name: MaterialDesignRaisedLightButton">
+
+                        </Button>-->
+
+            </Grid>
+
+
+        </ScrollViewer>
+
+        <!-- Бургер-меню -->
+        <ctrlm:Ctrl_burgerMenu_View 
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+            MyVisibility="Visible"/>
+    </Grid>
+</Page>

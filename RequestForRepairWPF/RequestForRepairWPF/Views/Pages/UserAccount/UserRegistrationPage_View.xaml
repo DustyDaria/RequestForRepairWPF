@@ -1,0 +1,358 @@
+﻿<Page x:Class="RequestForRepairWPF.Views.Pages.UserAccount.UserRegistrationPage_View"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RequestForRepairWPF"
+        xmlns:ctrlm="clr-namespace:RequestForRepairWPF.Views.Controls.Menu" 
+        xmlns:ctrlp="clr-namespace:RequestForRepairWPF.Views.Controls.Password"
+        xmlns:services="clr-namespace:RequestForRepairWPF.Services"
+        xmlns:cmd="clr-namespace:RequestForRepairWPF.Infrastructure.Commands.Controls.Menu"
+        xmlns:vm="clr-namespace:RequestForRepairWPF.ViewModels.Pages.UserAccount"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        mc:Ignorable="d"
+      
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="20"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        d:DesignHeight="800" d:DesignWidth="1080"
+      
+      Title="UserAccountPage_View">
+
+    <Page.DataContext>
+        <vm:UserRegistrationData_ViewModel/>
+    </Page.DataContext>
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding Path=LoadRegData}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    
+    <Grid>
+        <!-- Контент -->
+        <ScrollViewer
+                x:Name="scroll"
+                CanContentScroll="True"
+                VerticalScrollBarVisibility="Visible">
+            <ScrollViewer.Resources>
+                <services:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
+
+            </ScrollViewer.Resources>
+
+            <Grid 
+                Height="auto">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <TextBlock
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                    x:Name="label_Header"
+                    Margin="100 25 100 25"
+                    Text="Регистрация пользователя (не доделано)"
+                    Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                    FontWeight="DemiBold">
+                </TextBlock>
+
+                <TextBox
+                    x:Name="textBox_last_name"
+                    Text="{Binding Path=UserLastName, Mode=TwoWay}"
+                    Margin="100 25 25 25"
+                    Grid.Column="0"
+                    Grid.Row="1"
+                    MaxLength="30"
+                    Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                    VerticalAlignment="Top"
+                    materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource SecondaryHueMidBrush}"
+                    materialDesign:HintAssist.Foreground="{DynamicResource SecondaryHueMidBrush}"
+                    materialDesign:HintAssist.Hint="Фамилия"/>
+
+                <TextBox
+                    x:Name="textBox_name"
+                    Margin="100 25 25 25"
+                    Grid.Column="0"
+                    Grid.Row="2"
+                    MaxLength="30"
+                    Text="{Binding Path=UserName, Mode=TwoWay}"
+                    Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                    VerticalAlignment="Top"
+                    materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource SecondaryHueMidBrush}"
+                    materialDesign:HintAssist.Foreground="{DynamicResource SecondaryHueMidBrush}"
+                    materialDesign:HintAssist.Hint="Имя" />
+
+                <TextBox
+                    x:Name="textBox_middle_name"
+                    Margin="100 25 25 25"
+                    Grid.Column="0"
+                    Grid.Row="3"
+                    MaxLength="30"
+                    Text="{Binding Path=UserMiddleName, Mode=TwoWay}"
+                    Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                    VerticalAlignment="Top"
+                    materialDesign:HintAssist.Hint="Отчество" />
+
+                <TextBox
+                    x:Name="textBox_position"
+                    Margin="100 25 25 25"
+                    Grid.Column="0"
+                    Grid.Row="4"
+                    MaxLength="50"
+                    Text="{Binding Path=UserPosition, Mode=TwoWay}"
+                    materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource SecondaryHueMidBrush}"
+                    materialDesign:HintAssist.Foreground="{DynamicResource SecondaryHueMidBrush}"
+                    Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                    VerticalAlignment="Top"
+                    materialDesign:HintAssist.Hint="Должность" />
+
+                <TextBox
+                    x:Name="textBox_phone"
+                    Margin="100 25 25 25"
+                    Grid.Column="0"
+                    Grid.Row="5"
+                    MaxLength="16"
+                    VerticalAlignment="Top"
+                    Text="{Binding Path=UserPhone}"
+                    materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource SecondaryHueMidBrush}"
+                    materialDesign:HintAssist.Foreground="{DynamicResource SecondaryHueMidBrush}"
+                    Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                    materialDesign:HintAssist.Hint="Телефон"/>
+
+                <TextBox
+                    x:Name="textBox_user_login"
+                    Margin="25"
+                    Grid.Column="1"
+                    Grid.Row="1"
+                    MaxLength="35"
+                    Text="{Binding Path=UserEmail}"
+                    Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                    VerticalAlignment="Top"
+                    materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource SecondaryHueMidBrush}"
+                    materialDesign:HintAssist.Foreground="{DynamicResource SecondaryHueMidBrush}"
+                    materialDesign:HintAssist.Hint="Логин"/>
+
+                <ctrlp:Ctrl_PasswordBox_View
+                        Margin="25"
+                        Grid.Row="2"
+                        Grid.Column="1"
+                    materialDesign:HintAssist.Hint="Пароль" 
+                        Password="{Binding Path=UserPassword, Mode=TwoWay}"/>
+
+                <ctrlp:Ctrl_PasswordBox_View
+                        Margin="25"
+                        Grid.Row="3"
+                        Grid.Column="1"
+                    materialDesign:HintAssist.Hint="Повторите пароль" 
+                        Password="{Binding Path=UserRepeatPassword, Mode=TwoWay}"/>
+
+                <ComboBox
+                    x:Name="comboBox_type_of_account"
+                    VerticalAlignment="Top"
+                    
+                    Margin="25"
+                    Grid.Column="1"
+                    Grid.Row="4"
+                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                    materialDesign:TextFieldAssist.HasClearButton="True"
+                    materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource SecondaryHueMidBrush}"
+                    materialDesign:ColorZoneAssist.Mode="Accent"
+                    materialDesign:HintAssist.Hint="Тип аккаунта"
+                    materialDesign:HintAssist.Foreground="{DynamicResource SecondaryHueMidBrush}"
+                    materialDesign:HintAssist.HelperText="«... ни при каких условиях не изменится»"
+                    MinWidth="128"
+                    Height="50"
+                    
+                    SelectedItem="{Binding Path=UserType}"
+                    ItemsSource="{Binding Path=ListUsersType}" 
+                    SelectionChanged="comboBox_type_of_account_SelectionChanged">
+                </ComboBox>
+
+                <ComboBox
+                    x:Name="comboBox_category_executors"
+                            Visibility="Collapsed"
+                    VerticalAlignment="Top"
+                    Margin="25"
+                    Grid.Column="1"
+                    
+                    Grid.Row="5"
+                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                    materialDesign:TextFieldAssist.HasClearButton="True"
+                    materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource SecondaryHueMidBrush}"
+                    materialDesign:ColorZoneAssist.Mode="Accent"
+                    materialDesign:HintAssist.Hint="Категория исполнителя"
+                    materialDesign:HintAssist.Foreground="{DynamicResource SecondaryHueMidBrush}"
+                    materialDesign:HintAssist.HelperText="«Не спеши, выбирай с умом»"
+                    MinWidth="128"
+                    Height="50"
+                    ItemsSource="{Binding Path=ListExecutorsType}"
+                    SelectedItem="{Binding Path=UserCategoryExecutors}">
+                </ComboBox>
+
+                <ComboBox
+                    x:Name="comboBox_room_number"
+                            Visibility="Collapsed"
+                    VerticalAlignment="Top"
+                    Margin="25"
+                    Grid.Column="1"
+                    Grid.Row="5"
+                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                    materialDesign:TextFieldAssist.HasClearButton="True"
+                    materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource SecondaryHueMidBrush}"
+                    materialDesign:ColorZoneAssist.Mode="Accent"
+                    materialDesign:HintAssist.Hint="Номер кабинета"
+                    materialDesign:HintAssist.Foreground="{DynamicResource SecondaryHueMidBrush}"
+                    materialDesign:HintAssist.HelperText="Вы можете выбрать только свободное помещение"
+                    MinWidth="128"
+                    SelectedItem="{Binding Path=UserRoomNumber}"
+                    ItemsSource="{Binding Path=ListLibertyRoomsNumber}"
+                    Height="50">
+                </ComboBox>
+
+                <Grid
+                    x:Name="grid_room_number"
+                    Visibility="Collapsed"
+                    MinWidth="128"
+                    VerticalAlignment="Top"
+                    Margin="25"
+                    Grid.Column="1"
+                    Grid.Row="6">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="0.2*"/>
+                        <ColumnDefinition Width="0.2*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox
+                        Grid.Column="0"
+                        Width="auto"
+                        HorizontalAlignment="Left"
+                      materialDesign:HintAssist.Hint="Выбранные кабинеты"
+                      IsEnabled="False"
+                        Text="{Binding Path=ListToString}"/>
+
+                        <Button
+                            Grid.Column="1"
+                      Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                      ToolTip="MaterialDesignFloatingActionMiniAccentButton"
+                            Command="{Binding Path=AddRoomNumberCommand}">
+                            <materialDesign:PackIcon
+                        Kind="Plus"
+                        Height="24"
+                        Width="24" />
+                        </Button>
+                    <Button
+                        Grid.Column="2"
+                      Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                      HorizontalAlignment="Left"
+                      ToolTip="MaterialDesignFloatingActionMiniButton"
+                        Command="{Binding Path=DeleteRoomsNumberCommand}">
+                        <materialDesign:PackIcon
+                        Kind="Clear"
+                        Height="24"
+                        Width="24" />
+                    </Button>
+                </Grid>
+                <!--<StackPanel
+                    x:Name="stack_panel_room_number"
+                    Orientation="Horizontal"
+                    Visibility="Visible"
+                    MinWidth="128"
+                    VerticalAlignment="Top"
+                    Margin="25"
+                    Grid.Column="1"
+                    Grid.Row="5">
+                    
+                    <TextBox
+                        HorizontalAlignment="Left"
+                      materialDesign:HintAssist.Hint="Выбранные кабинеты"
+                      IsEnabled="False" />
+
+                    <StackPanel
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+                    <Button
+                      Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                      ToolTip="MaterialDesignFloatingActionMiniAccentButton">
+                        <materialDesign:PackIcon
+                        Kind="Plus"
+                        Height="24"
+                        Width="24" />
+                    </Button>
+                    <Button
+                      Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                      HorizontalAlignment="Left"
+                      ToolTip="MaterialDesignFloatingActionMiniButton">
+                        <materialDesign:PackIcon
+                        Kind="Clear"
+                        Height="24"
+                        Width="24" />
+                    </Button>
+                    </StackPanel>
+                </StackPanel>-->
+                
+
+                <Button
+                    x:Name="btn_Save"
+                    FontSize="18"
+                    Height="auto"
+                    Width="auto"
+                    Padding="25 10 25 10"
+                    Margin="25"
+                    HorizontalAlignment="Left"
+                    Grid.Column="1"
+                    Grid.Row="7"
+                    Content="Сохранить"
+                    Command="{Binding Path=RegUserDataCommand}"
+                    Style="{StaticResource MaterialDesignRaisedAccentButton}"
+                    ToolTip="Resource name: MaterialDesignRaisedAccentButton">
+                </Button>
+
+                <Button
+                    x:Name="btn_Cancel"
+                    FontSize="18"
+                    Height="auto"
+                    Width="auto"
+                    Padding="25 10 25 10"
+                    Margin="25"
+                    HorizontalAlignment="Right"
+                    Grid.Column="1"
+                    Grid.Row="7"
+                    Content="Отмена"
+                    Command="{Binding Path=CancelUserRegCommand}"
+                    Style="{StaticResource MaterialDesignFlatButton}"
+                    ToolTip="MaterialDesignFlatButton">
+                </Button>
+
+                
+
+            </Grid>
+
+        </ScrollViewer>
+
+        <!-- Бургер-меню -->
+        <ctrlm:Ctrl_burgerMenu_View 
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+            MyVisibility="Visible"/>
+
+    </Grid>
+</Page>

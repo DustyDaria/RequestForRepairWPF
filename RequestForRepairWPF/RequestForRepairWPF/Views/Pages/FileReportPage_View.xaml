@@ -1,0 +1,47 @@
+﻿<Page x:Class="RequestForRepairWPF.Views.Pages.FileReportPage_View"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ctrlm="clr-namespace:RequestForRepairWPF.Views.Controls.Menu" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:ctrl="clr-namespace:RequestForRepairWPF.Views.Controls.Room"
+        
+        xmlns:local="clr-namespace:RequestForRepairWPF"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        mc:Ignorable="d"
+        
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="20"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        d:DesignHeight="800" d:DesignWidth="1080"
+      
+      Title="Отчет">
+
+    <Grid>
+        <!-- Контент -->
+        <ScrollViewer
+                x:Name="scroll"
+                CanContentScroll="True"
+                VerticalScrollBarVisibility="Visible">
+            <TextBlock
+                    x:Name="label_Header"
+                    Margin="100,25,25,25"
+                    Text="Создание отчета"
+                    Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                    FontWeight="DemiBold">
+            </TextBlock>
+        </ScrollViewer>
+        
+        <!-- Бургер-меню -->
+        <ctrlm:Ctrl_burgerMenu_View 
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+            MyVisibility="Visible"/>
+    </Grid>
+</Page>

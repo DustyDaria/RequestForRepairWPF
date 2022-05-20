@@ -1,0 +1,106 @@
+﻿<Window x:Class="RequestForRepairWPF.Views.Windows.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RequestForRepairWPF"
+        xmlns:ctrlm="clr-namespace:RequestForRepairWPF.Views.Controls.Menu" 
+        xmlns:ctrlp="clr-namespace:RequestForRepairWPF.Views.Controls.Password"
+        xmlns:services="clr-namespace:RequestForRepairWPF.Services"
+        xmlns:cmdmenu="clr-namespace:RequestForRepairWPF.Infrastructure.Commands.Controls.Menu"
+        xmlns:cmd="clr-namespace:RequestForRepairWPF.Infrastructure.Commands"
+        xmlns:vm="clr-namespace:RequestForRepairWPF.ViewModels.Pages.UserAccount"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        mc:Ignorable="d"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="20"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignBackground}"
+        Foreground="{DynamicResource MaterialDesignLightForeground}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        WindowStartupLocation="CenterScreen"
+        Title="" 
+        MinHeight="700" 
+        MinWidth="900"
+        Height="800"
+        Width="1080">
+
+    <Window.Resources>
+        <cmd:GoBack x:Key="GoBack"/>
+        <cmd:LogOut x:Key="LogOut"/>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="75"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <!-- Шапка -->
+        <StackPanel 
+            Grid.Row="0"
+            Orientation="Vertical">
+            <materialDesign:ColorZone
+            Margin="0 0 0 25" 
+            Mode="PrimaryMid"
+            Padding="16">
+                <DockPanel>
+                    <StackPanel
+                            Width="auto"
+                Orientation="Horizontal"
+                    HorizontalAlignment="Center">
+                        <!--<Button
+                            x:Name="btn_Back" 
+                            Margin="5"
+                            Command="{StaticResource GoBack}"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Background="{x:Null}" 
+                            BorderBrush="{x:Null}" >
+                            <materialDesign:PackIcon 
+                            Foreground="#000000"
+                            Kind="ArrowBack"
+                            Width="25"
+                            Height="25"/>
+                        </Button>-->
+                        <TextBlock
+                    Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                            FontWeight="Medium"
+                            Foreground="{DynamicResource MaterialDesignLightForeground}"
+                    HorizontalAlignment="Center"
+                    Text="Учет заявок на ремонт">
+                        </TextBlock>
+                        <Button
+                            x:Name="btn_Logout" 
+                            Margin="5"
+                            Command="{StaticResource LogOut}"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Background="{x:Null}" 
+                            BorderBrush="{x:Null}" >
+                            <materialDesign:PackIcon 
+                            Foreground="#000000"
+                            Kind="Logout"
+                            Width="25"
+                            Height="25"/>
+                        </Button>
+                    </StackPanel>
+                </DockPanel>
+
+            </materialDesign:ColorZone>
+        </StackPanel>
+
+        <!-- Фрейм для страниц -->
+        <Frame 
+            Name="MainFrame"
+            Grid.Row="1"
+            ContentRendered="MainFrame_ContentRendered"
+            NavigationUIVisibility="Hidden">
+            
+        </Frame>
+
+    </Grid>
+</Window>

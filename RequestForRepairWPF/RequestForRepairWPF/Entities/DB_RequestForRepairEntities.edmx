@@ -1,0 +1,877 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище DB_RequestForRepairModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DescriptionRoom">
+          <Key>
+            <PropertyRef Name="id_description_DR" />
+          </Key>
+          <Property Name="id_type_room_DR" Type="int" Nullable="false" />
+          <Property Name="id_description_DR" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="description_DR" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="comment_DR" Type="varchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="Request">
+          <Key>
+            <PropertyRef Name="id_request" />
+          </Key>
+          <Property Name="id_request" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="date_start" Type="datetime" Nullable="false" />
+          <Property Name="date_end" Type="datetime" Nullable="false" />
+          <Property Name="status_request" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="room_number" Type="int" Nullable="false" />
+          <Property Name="name_request" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="description_request" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="comment_request" Type="varchar" MaxLength="300" />
+          <Property Name="inventory_number" Type="varchar" MaxLength="50" />
+          <Property Name="actual_date_end" Type="datetime" />
+          <Property Name="category_request" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Rooms">
+          <Key>
+            <PropertyRef Name="id_room" />
+          </Key>
+          <Property Name="id_room" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="room_number" Type="int" Nullable="false" />
+          <Property Name="room_status" Type="bit" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "DB_RequestForRepair.dbo.Software" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="Software">
+          <Key>
+            <PropertyRef Name="id_description_S" />
+            <PropertyRef Name="name_S" />
+          </Key>
+          <Property Name="id_description_S" Type="int" Nullable="false" />
+          <Property Name="name_S" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "DB_RequestForRepair.dbo.SpecialEquipment" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="SpecialEquipment">
+          <Key>
+            <PropertyRef Name="name_SE" />
+            <PropertyRef Name="in_amount_SE" />
+            <PropertyRef Name="id_description_SE" />
+            <PropertyRef Name="value_SE" />
+          </Key>
+          <Property Name="name_SE" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="purpose_SE" Type="varchar" MaxLength="300" />
+          <Property Name="in_amount_SE" Type="int" Nullable="false" />
+          <Property Name="id_description_SE" Type="int" Nullable="false" />
+          <Property Name="value_SE" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "DB_RequestForRepair.dbo.TechnicalEquipment" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="TechnicalEquipment">
+          <Key>
+            <PropertyRef Name="id_description_TE" />
+            <PropertyRef Name="in_amount_TE" />
+            <PropertyRef Name="name_TE" />
+            <PropertyRef Name="value_TE" />
+          </Key>
+          <Property Name="id_description_TE" Type="int" Nullable="false" />
+          <Property Name="in_amount_TE" Type="int" Nullable="false" />
+          <Property Name="name_TE" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="value_TE" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TypeOfAccount">
+          <Key>
+            <PropertyRef Name="id_type" />
+          </Key>
+          <Property Name="id_type" Type="int" Nullable="false" />
+          <Property Name="name_type" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TypeRoom">
+          <Key>
+            <PropertyRef Name="id_type_room_TR" />
+          </Key>
+          <Property Name="id_type_room_TR" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name_type_room_TR" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="U_R_Customer">
+          <Key>
+            <PropertyRef Name="userID_URC" />
+            <PropertyRef Name="requestID_URC" />
+          </Key>
+          <Property Name="userID_URC" Type="int" Nullable="false" />
+          <Property Name="requestID_URC" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="U_R_Executor">
+          <Key>
+            <PropertyRef Name="userID_URE" />
+            <PropertyRef Name="requestID_URE" />
+          </Key>
+          <Property Name="userID_URE" Type="int" Nullable="false" />
+          <Property Name="requestID_URE" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "DB_RequestForRepair.dbo.U_R_Room" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="U_R_Room">
+          <Key>
+            <PropertyRef Name="userID_URR" />
+            <PropertyRef Name="id_room" />
+          </Key>
+          <Property Name="userID_URR" Type="int" Nullable="false" />
+          <Property Name="id_type_room_URR" Type="int" />
+          <Property Name="id_room" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="id_user" />
+          </Key>
+          <Property Name="id_user" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_type" Type="int" Nullable="false" />
+          <Property Name="user_login" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="user_password" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="last_name" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="middle_name" Type="varchar" MaxLength="30" />
+          <Property Name="position" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="category_executors" Type="varchar" MaxLength="13" />
+          <Property Name="phone" Type="char" MaxLength="16" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Customer_Request">
+          <End Role="Request" Type="Self.Request" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="U_R_Customer" Type="Self.U_R_Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Request">
+              <PropertyRef Name="id_request" />
+            </Principal>
+            <Dependent Role="U_R_Customer">
+              <PropertyRef Name="requestID_URC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Customer_Users">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="U_R_Customer" Type="Self.U_R_Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id_user" />
+            </Principal>
+            <Dependent Role="U_R_Customer">
+              <PropertyRef Name="userID_URC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DescriptionRoom_TypeRoom">
+          <End Role="TypeRoom" Type="Self.TypeRoom" Multiplicity="1" />
+          <End Role="DescriptionRoom" Type="Self.DescriptionRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeRoom">
+              <PropertyRef Name="id_type_room_TR" />
+            </Principal>
+            <Dependent Role="DescriptionRoom">
+              <PropertyRef Name="id_type_room_DR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Room_Users">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="U_R_Room" Type="Self.U_R_Room" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id_user" />
+            </Principal>
+            <Dependent Role="U_R_Room">
+              <PropertyRef Name="userID_URR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Software_DescriptionRoom">
+          <End Role="DescriptionRoom" Type="Self.DescriptionRoom" Multiplicity="1" />
+          <End Role="Software" Type="Self.Software" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DescriptionRoom">
+              <PropertyRef Name="id_description_DR" />
+            </Principal>
+            <Dependent Role="Software">
+              <PropertyRef Name="id_description_S" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SpecialEquipment_DescriptionRoom">
+          <End Role="DescriptionRoom" Type="Self.DescriptionRoom" Multiplicity="1" />
+          <End Role="SpecialEquipment" Type="Self.SpecialEquipment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DescriptionRoom">
+              <PropertyRef Name="id_description_DR" />
+            </Principal>
+            <Dependent Role="SpecialEquipment">
+              <PropertyRef Name="id_description_SE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TechnicalEquipment_DescriptionRoom">
+          <End Role="DescriptionRoom" Type="Self.DescriptionRoom" Multiplicity="1" />
+          <End Role="TechnicalEquipment" Type="Self.TechnicalEquipment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DescriptionRoom">
+              <PropertyRef Name="id_description_DR" />
+            </Principal>
+            <Dependent Role="TechnicalEquipment">
+              <PropertyRef Name="id_description_TE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_U_R_Executor_Request">
+          <End Role="Request" Type="Self.Request" Multiplicity="1" />
+          <End Role="U_R_Executor" Type="Self.U_R_Executor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Request">
+              <PropertyRef Name="id_request" />
+            </Principal>
+            <Dependent Role="U_R_Executor">
+              <PropertyRef Name="requestID_URE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_U_R_Executor_Users">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="U_R_Executor" Type="Self.U_R_Executor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id_user" />
+            </Principal>
+            <Dependent Role="U_R_Executor">
+              <PropertyRef Name="userID_URE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_U_R_Room_Rooms">
+          <End Role="Rooms" Type="Self.Rooms" Multiplicity="1" />
+          <End Role="U_R_Room" Type="Self.U_R_Room" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rooms">
+              <PropertyRef Name="id_room" />
+            </Principal>
+            <Dependent Role="U_R_Room">
+              <PropertyRef Name="id_room" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_U_R_Room_TypeRoom">
+          <End Role="TypeRoom" Type="Self.TypeRoom" Multiplicity="0..1" />
+          <End Role="U_R_Room" Type="Self.U_R_Room" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeRoom">
+              <PropertyRef Name="id_type_room_TR" />
+            </Principal>
+            <Dependent Role="U_R_Room">
+              <PropertyRef Name="id_type_room_URR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_TypeOfAccount">
+          <End Role="TypeOfAccount" Type="Self.TypeOfAccount" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeOfAccount">
+              <PropertyRef Name="id_type" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="id_type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище DB_RequestForRepairModelContainer">
+          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DescriptionRoom" EntityType="Self.DescriptionRoom" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Request" EntityType="Self.Request" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rooms" EntityType="Self.Rooms" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TypeOfAccount" EntityType="Self.TypeOfAccount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TypeRoom" EntityType="Self.TypeRoom" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="U_R_Customer" EntityType="Self.U_R_Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="U_R_Executor" EntityType="Self.U_R_Executor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Software" EntityType="Self.Software" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Software].[id_description_S] AS [id_description_S], 
+    [Software].[name_S] AS [name_S]
+    FROM [dbo].[Software] AS [Software]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="SpecialEquipment" EntityType="Self.SpecialEquipment" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [SpecialEquipment].[name_SE] AS [name_SE], 
+    [SpecialEquipment].[purpose_SE] AS [purpose_SE], 
+    [SpecialEquipment].[in_amount_SE] AS [in_amount_SE], 
+    [SpecialEquipment].[id_description_SE] AS [id_description_SE], 
+    [SpecialEquipment].[value_SE] AS [value_SE]
+    FROM [dbo].[SpecialEquipment] AS [SpecialEquipment]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="TechnicalEquipment" EntityType="Self.TechnicalEquipment" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TechnicalEquipment].[id_description_TE] AS [id_description_TE], 
+    [TechnicalEquipment].[in_amount_TE] AS [in_amount_TE], 
+    [TechnicalEquipment].[name_TE] AS [name_TE], 
+    [TechnicalEquipment].[value_TE] AS [value_TE]
+    FROM [dbo].[TechnicalEquipment] AS [TechnicalEquipment]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="U_R_Room" EntityType="Self.U_R_Room" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [U_R_Room].[userID_URR] AS [userID_URR], 
+    [U_R_Room].[id_type_room_URR] AS [id_type_room_URR], 
+    [U_R_Room].[id_room] AS [id_room]
+    FROM [dbo].[U_R_Room] AS [U_R_Room]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Customer_Request" Association="Self.FK_Customer_Request">
+            <End Role="Request" EntitySet="Request" />
+            <End Role="U_R_Customer" EntitySet="U_R_Customer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Customer_Users" Association="Self.FK_Customer_Users">
+            <End Role="User" EntitySet="User" />
+            <End Role="U_R_Customer" EntitySet="U_R_Customer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DescriptionRoom_TypeRoom" Association="Self.FK_DescriptionRoom_TypeRoom">
+            <End Role="TypeRoom" EntitySet="TypeRoom" />
+            <End Role="DescriptionRoom" EntitySet="DescriptionRoom" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Room_Users" Association="Self.FK_Room_Users">
+            <End Role="User" EntitySet="User" />
+            <End Role="U_R_Room" EntitySet="U_R_Room" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Software_DescriptionRoom" Association="Self.FK_Software_DescriptionRoom">
+            <End Role="DescriptionRoom" EntitySet="DescriptionRoom" />
+            <End Role="Software" EntitySet="Software" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SpecialEquipment_DescriptionRoom" Association="Self.FK_SpecialEquipment_DescriptionRoom">
+            <End Role="DescriptionRoom" EntitySet="DescriptionRoom" />
+            <End Role="SpecialEquipment" EntitySet="SpecialEquipment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TechnicalEquipment_DescriptionRoom" Association="Self.FK_TechnicalEquipment_DescriptionRoom">
+            <End Role="DescriptionRoom" EntitySet="DescriptionRoom" />
+            <End Role="TechnicalEquipment" EntitySet="TechnicalEquipment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_U_R_Executor_Request" Association="Self.FK_U_R_Executor_Request">
+            <End Role="Request" EntitySet="Request" />
+            <End Role="U_R_Executor" EntitySet="U_R_Executor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_U_R_Executor_Users" Association="Self.FK_U_R_Executor_Users">
+            <End Role="User" EntitySet="User" />
+            <End Role="U_R_Executor" EntitySet="U_R_Executor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_U_R_Room_Rooms" Association="Self.FK_U_R_Room_Rooms">
+            <End Role="Rooms" EntitySet="Rooms" />
+            <End Role="U_R_Room" EntitySet="U_R_Room" />
+          </AssociationSet>
+          <AssociationSet Name="FK_U_R_Room_TypeRoom" Association="Self.FK_U_R_Room_TypeRoom">
+            <End Role="TypeRoom" EntitySet="TypeRoom" />
+            <End Role="U_R_Room" EntitySet="U_R_Room" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_TypeOfAccount" Association="Self.FK_Users_TypeOfAccount">
+            <End Role="TypeOfAccount" EntitySet="TypeOfAccount" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DB_RequestForRepairModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="C__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DescriptionRoom">
+          <Key>
+            <PropertyRef Name="id_description_DR" />
+          </Key>
+          <Property Name="id_type_room_DR" Type="Int32" Nullable="false" />
+          <Property Name="id_description_DR" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="description_DR" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="comment_DR" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TypeRoom" Relationship="Self.FK_DescriptionRoom_TypeRoom" FromRole="DescriptionRoom" ToRole="TypeRoom" />
+          <NavigationProperty Name="Software" Relationship="Self.FK_Software_DescriptionRoom" FromRole="DescriptionRoom" ToRole="Software" />
+          <NavigationProperty Name="SpecialEquipment" Relationship="Self.FK_SpecialEquipment_DescriptionRoom" FromRole="DescriptionRoom" ToRole="SpecialEquipment" />
+          <NavigationProperty Name="TechnicalEquipment" Relationship="Self.FK_TechnicalEquipment_DescriptionRoom" FromRole="DescriptionRoom" ToRole="TechnicalEquipment" />
+        </EntityType>
+        <EntityType Name="Request">
+          <Key>
+            <PropertyRef Name="id_request" />
+          </Key>
+          <Property Name="id_request" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="date_start" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="date_end" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="status_request" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="room_number" Type="Int32" Nullable="false" />
+          <Property Name="name_request" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="description_request" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="comment_request" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="inventory_number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="actual_date_end" Type="DateTime" Precision="3" />
+          <Property Name="category_request" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.U_R_Customer" FromRole="Request" ToRole="User" />
+          <NavigationProperty Name="User1" Relationship="Self.U_R_Executor" FromRole="Request" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Rooms">
+          <Key>
+            <PropertyRef Name="id_room" />
+          </Key>
+          <Property Name="id_room" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="room_number" Type="Int32" Nullable="false" />
+          <Property Name="room_status" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="U_R_Room" Relationship="Self.FK_U_R_Room_Rooms" FromRole="Rooms" ToRole="U_R_Room" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TypeOfAccount">
+          <Key>
+            <PropertyRef Name="id_type" />
+          </Key>
+          <Property Name="id_type" Type="Int32" Nullable="false" />
+          <Property Name="name_type" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Users_TypeOfAccount" FromRole="TypeOfAccount" ToRole="User" />
+        </EntityType>
+        <EntityType Name="TypeRoom">
+          <Key>
+            <PropertyRef Name="id_type_room_TR" />
+          </Key>
+          <Property Name="id_type_room_TR" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name_type_room_TR" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="DescriptionRoom" Relationship="Self.FK_DescriptionRoom_TypeRoom" FromRole="TypeRoom" ToRole="DescriptionRoom" />
+          <NavigationProperty Name="U_R_Room" Relationship="Self.FK_U_R_Room_TypeRoom" FromRole="TypeRoom" ToRole="U_R_Room" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="id_user" />
+          </Key>
+          <Property Name="id_user" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_type" Type="Int32" Nullable="false" />
+          <Property Name="user_login" Type="String" MaxLength="35" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="user_password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="last_name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="middle_name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="position" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="category_executors" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="phone" Type="String" MaxLength="16" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="TypeOfAccount" Relationship="Self.FK_Users_TypeOfAccount" FromRole="User" ToRole="TypeOfAccount" />
+          <NavigationProperty Name="U_R_Room" Relationship="Self.FK_Room_Users" FromRole="User" ToRole="U_R_Room" />
+          <NavigationProperty Name="Request" Relationship="Self.U_R_Customer" FromRole="User" ToRole="Request" />
+          <NavigationProperty Name="Request1" Relationship="Self.U_R_Executor" FromRole="User" ToRole="Request" />
+        </EntityType>
+        <EntityType Name="Software">
+          <Key>
+            <PropertyRef Name="id_description_S" />
+            <PropertyRef Name="name_S" />
+          </Key>
+          <Property Name="id_description_S" Type="Int32" Nullable="false" />
+          <Property Name="name_S" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="DescriptionRoom" Relationship="Self.FK_Software_DescriptionRoom" FromRole="Software" ToRole="DescriptionRoom" />
+        </EntityType>
+        <EntityType Name="SpecialEquipment">
+          <Key>
+            <PropertyRef Name="name_SE" />
+            <PropertyRef Name="in_amount_SE" />
+            <PropertyRef Name="id_description_SE" />
+            <PropertyRef Name="value_SE" />
+          </Key>
+          <Property Name="name_SE" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="purpose_SE" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="in_amount_SE" Type="Int32" Nullable="false" />
+          <Property Name="id_description_SE" Type="Int32" Nullable="false" />
+          <Property Name="value_SE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="DescriptionRoom" Relationship="Self.FK_SpecialEquipment_DescriptionRoom" FromRole="SpecialEquipment" ToRole="DescriptionRoom" />
+        </EntityType>
+        <EntityType Name="TechnicalEquipment">
+          <Key>
+            <PropertyRef Name="id_description_TE" />
+            <PropertyRef Name="in_amount_TE" />
+            <PropertyRef Name="name_TE" />
+            <PropertyRef Name="value_TE" />
+          </Key>
+          <Property Name="id_description_TE" Type="Int32" Nullable="false" />
+          <Property Name="in_amount_TE" Type="Int32" Nullable="false" />
+          <Property Name="name_TE" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="value_TE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="DescriptionRoom" Relationship="Self.FK_TechnicalEquipment_DescriptionRoom" FromRole="TechnicalEquipment" ToRole="DescriptionRoom" />
+        </EntityType>
+        <EntityType Name="U_R_Room">
+          <Key>
+            <PropertyRef Name="userID_URR" />
+            <PropertyRef Name="id_room" />
+          </Key>
+          <Property Name="userID_URR" Type="Int32" Nullable="false" />
+          <Property Name="id_type_room_URR" Type="Int32" />
+          <Property Name="id_room" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Rooms" Relationship="Self.FK_U_R_Room_Rooms" FromRole="U_R_Room" ToRole="Rooms" />
+          <NavigationProperty Name="TypeRoom" Relationship="Self.FK_U_R_Room_TypeRoom" FromRole="U_R_Room" ToRole="TypeRoom" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Room_Users" FromRole="U_R_Room" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_DescriptionRoom_TypeRoom">
+          <End Role="TypeRoom" Type="Self.TypeRoom" Multiplicity="1" />
+          <End Role="DescriptionRoom" Type="Self.DescriptionRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeRoom">
+              <PropertyRef Name="id_type_room_TR" />
+            </Principal>
+            <Dependent Role="DescriptionRoom">
+              <PropertyRef Name="id_type_room_DR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Software_DescriptionRoom">
+          <End Role="DescriptionRoom" Type="Self.DescriptionRoom" Multiplicity="1" />
+          <End Role="Software" Type="Self.Software" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DescriptionRoom">
+              <PropertyRef Name="id_description_DR" />
+            </Principal>
+            <Dependent Role="Software">
+              <PropertyRef Name="id_description_S" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SpecialEquipment_DescriptionRoom">
+          <End Role="DescriptionRoom" Type="Self.DescriptionRoom" Multiplicity="1" />
+          <End Role="SpecialEquipment" Type="Self.SpecialEquipment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DescriptionRoom">
+              <PropertyRef Name="id_description_DR" />
+            </Principal>
+            <Dependent Role="SpecialEquipment">
+              <PropertyRef Name="id_description_SE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TechnicalEquipment_DescriptionRoom">
+          <End Role="DescriptionRoom" Type="Self.DescriptionRoom" Multiplicity="1" />
+          <End Role="TechnicalEquipment" Type="Self.TechnicalEquipment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DescriptionRoom">
+              <PropertyRef Name="id_description_DR" />
+            </Principal>
+            <Dependent Role="TechnicalEquipment">
+              <PropertyRef Name="id_description_TE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_U_R_Room_Rooms">
+          <End Role="Rooms" Type="Self.Rooms" Multiplicity="1" />
+          <End Role="U_R_Room" Type="Self.U_R_Room" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rooms">
+              <PropertyRef Name="id_room" />
+            </Principal>
+            <Dependent Role="U_R_Room">
+              <PropertyRef Name="id_room" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_TypeOfAccount">
+          <End Role="TypeOfAccount" Type="Self.TypeOfAccount" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeOfAccount">
+              <PropertyRef Name="id_type" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="id_type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_U_R_Room_TypeRoom">
+          <End Role="TypeRoom" Type="Self.TypeRoom" Multiplicity="0..1" />
+          <End Role="U_R_Room" Type="Self.U_R_Room" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeRoom">
+              <PropertyRef Name="id_type_room_TR" />
+            </Principal>
+            <Dependent Role="U_R_Room">
+              <PropertyRef Name="id_type_room_URR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Room_Users">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="U_R_Room" Type="Self.U_R_Room" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id_user" />
+            </Principal>
+            <Dependent Role="U_R_Room">
+              <PropertyRef Name="userID_URR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="U_R_Customer">
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+        </Association>
+        <Association Name="U_R_Executor">
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="DB_RequestForRepairEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+          <EntitySet Name="DescriptionRoom" EntityType="Self.DescriptionRoom" />
+          <EntitySet Name="Request" EntityType="Self.Request" />
+          <EntitySet Name="Rooms" EntityType="Self.Rooms" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="TypeOfAccount" EntityType="Self.TypeOfAccount" />
+          <EntitySet Name="TypeRoom" EntityType="Self.TypeRoom" />
+          <EntitySet Name="User" EntityType="Self.User" />
+          <EntitySet Name="Software" EntityType="Self.Software" />
+          <EntitySet Name="SpecialEquipment" EntityType="Self.SpecialEquipment" />
+          <EntitySet Name="TechnicalEquipment" EntityType="Self.TechnicalEquipment" />
+          <EntitySet Name="U_R_Room" EntityType="Self.U_R_Room" />
+          <AssociationSet Name="FK_DescriptionRoom_TypeRoom" Association="Self.FK_DescriptionRoom_TypeRoom">
+            <End Role="TypeRoom" EntitySet="TypeRoom" />
+            <End Role="DescriptionRoom" EntitySet="DescriptionRoom" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Software_DescriptionRoom" Association="Self.FK_Software_DescriptionRoom">
+            <End Role="DescriptionRoom" EntitySet="DescriptionRoom" />
+            <End Role="Software" EntitySet="Software" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SpecialEquipment_DescriptionRoom" Association="Self.FK_SpecialEquipment_DescriptionRoom">
+            <End Role="DescriptionRoom" EntitySet="DescriptionRoom" />
+            <End Role="SpecialEquipment" EntitySet="SpecialEquipment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TechnicalEquipment_DescriptionRoom" Association="Self.FK_TechnicalEquipment_DescriptionRoom">
+            <End Role="DescriptionRoom" EntitySet="DescriptionRoom" />
+            <End Role="TechnicalEquipment" EntitySet="TechnicalEquipment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_U_R_Room_Rooms" Association="Self.FK_U_R_Room_Rooms">
+            <End Role="Rooms" EntitySet="Rooms" />
+            <End Role="U_R_Room" EntitySet="U_R_Room" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_TypeOfAccount" Association="Self.FK_Users_TypeOfAccount">
+            <End Role="TypeOfAccount" EntitySet="TypeOfAccount" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_U_R_Room_TypeRoom" Association="Self.FK_U_R_Room_TypeRoom">
+            <End Role="TypeRoom" EntitySet="TypeRoom" />
+            <End Role="U_R_Room" EntitySet="U_R_Room" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Room_Users" Association="Self.FK_Room_Users">
+            <End Role="User" EntitySet="User" />
+            <End Role="U_R_Room" EntitySet="U_R_Room" />
+          </AssociationSet>
+          <AssociationSet Name="U_R_Customer" Association="Self.U_R_Customer">
+            <End Role="Request" EntitySet="Request" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="U_R_Executor" Association="Self.U_R_Executor">
+            <End Role="Request" EntitySet="Request" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище DB_RequestForRepairModelContainer" CdmEntityContainer="DB_RequestForRepairEntities">
+          <EntitySetMapping Name="C__MigrationHistory">
+            <EntityTypeMapping TypeName="DB_RequestForRepairModel.C__MigrationHistory">
+              <MappingFragment StoreEntitySet="__MigrationHistory">
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DescriptionRoom">
+            <EntityTypeMapping TypeName="DB_RequestForRepairModel.DescriptionRoom">
+              <MappingFragment StoreEntitySet="DescriptionRoom">
+                <ScalarProperty Name="id_type_room_DR" ColumnName="id_type_room_DR" />
+                <ScalarProperty Name="id_description_DR" ColumnName="id_description_DR" />
+                <ScalarProperty Name="description_DR" ColumnName="description_DR" />
+                <ScalarProperty Name="comment_DR" ColumnName="comment_DR" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Request">
+            <EntityTypeMapping TypeName="DB_RequestForRepairModel.Request">
+              <MappingFragment StoreEntitySet="Request">
+                <ScalarProperty Name="id_request" ColumnName="id_request" />
+                <ScalarProperty Name="date_start" ColumnName="date_start" />
+                <ScalarProperty Name="date_end" ColumnName="date_end" />
+                <ScalarProperty Name="status_request" ColumnName="status_request" />
+                <ScalarProperty Name="room_number" ColumnName="room_number" />
+                <ScalarProperty Name="name_request" ColumnName="name_request" />
+                <ScalarProperty Name="description_request" ColumnName="description_request" />
+                <ScalarProperty Name="comment_request" ColumnName="comment_request" />
+                <ScalarProperty Name="inventory_number" ColumnName="inventory_number" />
+                <ScalarProperty Name="actual_date_end" ColumnName="actual_date_end" />
+                <ScalarProperty Name="category_request" ColumnName="category_request" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rooms">
+            <EntityTypeMapping TypeName="DB_RequestForRepairModel.Rooms">
+              <MappingFragment StoreEntitySet="Rooms">
+                <ScalarProperty Name="id_room" ColumnName="id_room" />
+                <ScalarProperty Name="room_number" ColumnName="room_number" />
+                <ScalarProperty Name="room_status" ColumnName="room_status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="DB_RequestForRepairModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TypeOfAccount">
+            <EntityTypeMapping TypeName="DB_RequestForRepairModel.TypeOfAccount">
+              <MappingFragment StoreEntitySet="TypeOfAccount">
+                <ScalarProperty Name="id_type" ColumnName="id_type" />
+                <ScalarProperty Name="name_type" ColumnName="name_type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TypeRoom">
+            <EntityTypeMapping TypeName="DB_RequestForRepairModel.TypeRoom">
+              <MappingFragment StoreEntitySet="TypeRoom">
+                <ScalarProperty Name="id_type_room_TR" ColumnName="id_type_room_TR" />
+                <ScalarProperty Name="name_type_room_TR" ColumnName="name_type_room_TR" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="DB_RequestForRepairModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="id_user" ColumnName="id_user" />
+                <ScalarProperty Name="id_type" ColumnName="id_type" />
+                <ScalarProperty Name="user_login" ColumnName="user_login" />
+                <ScalarProperty Name="user_password" ColumnName="user_password" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="middle_name" ColumnName="middle_name" />
+                <ScalarProperty Name="position" ColumnName="position" />
+                <ScalarProperty Name="category_executors" ColumnName="category_executors" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Software">
+            <EntityTypeMapping TypeName="DB_RequestForRepairModel.Software">
+              <MappingFragment StoreEntitySet="Software">
+                <ScalarProperty Name="id_description_S" ColumnName="id_description_S" />
+                <ScalarProperty Name="name_S" ColumnName="name_S" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SpecialEquipment">
+            <EntityTypeMapping TypeName="DB_RequestForRepairModel.SpecialEquipment">
+              <MappingFragment StoreEntitySet="SpecialEquipment">
+                <ScalarProperty Name="name_SE" ColumnName="name_SE" />
+                <ScalarProperty Name="purpose_SE" ColumnName="purpose_SE" />
+                <ScalarProperty Name="in_amount_SE" ColumnName="in_amount_SE" />
+                <ScalarProperty Name="id_description_SE" ColumnName="id_description_SE" />
+                <ScalarProperty Name="value_SE" ColumnName="value_SE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TechnicalEquipment">
+            <EntityTypeMapping TypeName="DB_RequestForRepairModel.TechnicalEquipment">
+              <MappingFragment StoreEntitySet="TechnicalEquipment">
+                <ScalarProperty Name="id_description_TE" ColumnName="id_description_TE" />
+                <ScalarProperty Name="in_amount_TE" ColumnName="in_amount_TE" />
+                <ScalarProperty Name="name_TE" ColumnName="name_TE" />
+                <ScalarProperty Name="value_TE" ColumnName="value_TE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="U_R_Room">
+            <EntityTypeMapping TypeName="DB_RequestForRepairModel.U_R_Room">
+              <MappingFragment StoreEntitySet="U_R_Room">
+                <ScalarProperty Name="userID_URR" ColumnName="userID_URR" />
+                <ScalarProperty Name="id_type_room_URR" ColumnName="id_type_room_URR" />
+                <ScalarProperty Name="id_room" ColumnName="id_room" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="U_R_Customer" TypeName="DB_RequestForRepairModel.U_R_Customer" StoreEntitySet="U_R_Customer">
+            <EndProperty Name="Request">
+              <ScalarProperty Name="id_request" ColumnName="requestID_URC" />
+            </EndProperty>
+            <EndProperty Name="User">
+              <ScalarProperty Name="id_user" ColumnName="userID_URC" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="U_R_Executor" TypeName="DB_RequestForRepairModel.U_R_Executor" StoreEntitySet="U_R_Executor">
+            <EndProperty Name="Request">
+              <ScalarProperty Name="id_request" ColumnName="requestID_URE" />
+            </EndProperty>
+            <EndProperty Name="User">
+              <ScalarProperty Name="id_user" ColumnName="userID_URE" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
