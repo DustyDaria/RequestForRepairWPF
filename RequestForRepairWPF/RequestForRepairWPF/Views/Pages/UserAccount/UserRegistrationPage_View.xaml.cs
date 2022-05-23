@@ -43,7 +43,7 @@ namespace RequestForRepairWPF.Views.Pages.UserAccount
                 grid_room_number.Visibility = Visibility.Collapsed;
                 comboBox_category_executors.Visibility = Visibility.Visible;
             }
-            else if(_viewModel.UserType == "Системный администратор")
+            else if(_viewModel.UserType == "Администратор")
             {
                 comboBox_room_number.Visibility = Visibility.Collapsed;
                 grid_room_number.Visibility = Visibility.Collapsed;

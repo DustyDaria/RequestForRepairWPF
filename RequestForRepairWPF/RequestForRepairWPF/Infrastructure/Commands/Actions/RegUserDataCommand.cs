@@ -39,11 +39,11 @@ namespace RequestForRepairWPF.Infrastructure.Commands.Actions
                                        .FirstOrDefault();
             #endregion
 
-            if (_userRegData_ViewModel.UserType == "Системный администратор" && admins.Count >= 3)
+            if (_userRegData_ViewModel.UserType == "Администратор" && admins.Count >= 3)
             {
-                OpenDialogWindow("Вы не можете зарегистрировать нового пользователя с типом аккаунта \"Системный администратор\"!\nМаксимально возможное количество пользователей с типом аккаунта \"Системный администратор\" не должно превышать 3");
+                OpenDialogWindow("Вы не можете зарегистрировать нового пользователя с типом аккаунта \"Администратор\"!\nМаксимально возможное количество пользователей с типом аккаунта \"Администратор\" не должно превышать 3");
             }
-            else if (_userRegData_ViewModel.UserType == "Системный администратор")
+            else if (_userRegData_ViewModel.UserType == "Администратор")
             {
                 if (_userRegData_ViewModel.UserLastName == null || _userRegData_ViewModel.UserLastName == string.Empty)
                 {
@@ -200,7 +200,7 @@ namespace RequestForRepairWPF.Infrastructure.Commands.Actions
             context.User.Add(user);
             context.SaveChanges();
 
-            OpenDialogWindow("Системный администратор был успешно зарегистрирован!");
+            OpenDialogWindow("Администратор был успешно зарегистрирован!");
         }
         private void SaveUsersData_Executor(string _name, string _lastName, string _middleName, string _position, string _phone, string _email, string _password, int _typeOfAccount, string _category_executor)
         {

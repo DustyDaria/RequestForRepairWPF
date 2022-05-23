@@ -123,7 +123,7 @@ namespace RequestForRepairWPF.Infrastructure.Commands.Controls.Password
 
             if(_idType == 1)
             {
-                _viewModel.UserType_string = "Системный администратор";
+                _viewModel.UserType_string = "Администратор";
             }
             else if(_idType == 2)
             {
