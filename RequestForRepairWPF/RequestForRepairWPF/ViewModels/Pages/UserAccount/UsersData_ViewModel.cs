@@ -1,6 +1,8 @@
 ﻿using RequestForRepairWPF.Data.User;
 using RequestForRepairWPF.Entities;
+using RequestForRepairWPF.Infrastructure.Commands.Actions;
 using RequestForRepairWPF.Infrastructure.Commands.Controls.Password;
+using RequestForRepairWPF.Infrastructure.Commands.LoadView;
 using RequestForRepairWPF.Services;
 using RequestForRepairWPF.ViewModels.Base;
 using RequestForRepairWPF.ViewModels.DialogWindows;
@@ -216,7 +218,7 @@ namespace RequestForRepairWPF.ViewModels.Pages.UserAccount
         {
             get
             {
-                _openDescriptionRoomView = new OpenDescriptionRoomViewCommand(this);
+                _openDescriptionRoomView = new OpenDescriptionRoom2ViewCommand(this);
                 return _openDescriptionRoomView;
             }
         }
@@ -225,181 +227,4 @@ namespace RequestForRepairWPF.ViewModels.Pages.UserAccount
 
         #endregion
     }
-
-    #region Класс-команда отмены
-    internal class CancelCommand : MyCommand
-    {
-        public CancelCommand(UsersData_ViewModel usersData_ViewModel) : base(usersData_ViewModel) { }
-        public override bool CanExecute(object parameter) => true;
-        public override void Execute(object parameter) => Cancel();
-
-        private void Cancel()
-        {
-            if (User_DataModel._idType == 1)
-            {
-                UpdateData();
-
-                PageManager.MainFrame.Navigate(new UserAccountPage_View());
-            }
-            else if (User_DataModel._idType == 2)
-            {
-                UpdateData();
-
-                PageManager.MainFrame.Navigate(new CustomerUserAccountPage_View());
-            }
-            else if (User_DataModel._idType == 3)
-            {
-                UpdateData(); 
-
-                PageManager.MainFrame.Navigate(new UserAccountPage_View());
-            }
-        }
-
-        private void UpdateData()
-        {
-            _usersData_ViewModel.UserLastName = User_DataModel._lastName;
-            _usersData_ViewModel.UserName = User_DataModel._name;
-            _usersData_ViewModel.UserMiddleName = User_DataModel._middleName;
-            _usersData_ViewModel.UserPosition = User_DataModel._position;
-            _usersData_ViewModel.UserPhone = User_DataModel._phone;
-        }
-    }
-    #endregion
-
-    #region Класс-команда для сохранения данных 
-    internal class SaveDataCommand : MyCommand
-    {
-        private Entities.DB_RequestForRepairEntities context = new Entities.DB_RequestForRepairEntities();
-
-        public SaveDataCommand(UsersData_ViewModel usersData_ViewModel) : base(usersData_ViewModel) { }
-        public override bool CanExecute(object parameter) => true;
-        public override void Execute(object parameter) => SaveData();
-
-        private void SaveData()
-        {
-            #region  Получение логина зарегистрированного пользователя по совпадению с введенным (для проверки)
-            string userLogin = _usersData_ViewModel.UserEmail;
-            string checkedUserLogin = (from u in context.User
-                                       where u.user_login == userLogin
-                                       select u.user_login)
-                                       .FirstOrDefault();
-            #endregion
-
-            if (_usersData_ViewModel.UserLastName == null || _usersData_ViewModel.UserLastName == string.Empty)
-            {
-                OpenDialogWindow("Пожалуйста, введите фамилию пользователя!");
-            }
-            else if (_usersData_ViewModel.UserName == null || _usersData_ViewModel.UserName == string.Empty)
-            {
-                OpenDialogWindow("Пожалуйста, введите имя пользователя!");
-            }
-            else if (_usersData_ViewModel.UserPosition == null || _usersData_ViewModel.UserPosition == string.Empty)
-            {
-                OpenDialogWindow("Пожалуйста, введите должность пользователя!");
-            }
-            else if (_usersData_ViewModel.UserPhone == null || _usersData_ViewModel.UserPhone == string.Empty)
-            {
-                OpenDialogWindow("Пожалуйста, введите телефон пользователя!");
-            }
-            else if (_usersData_ViewModel.UserPassword_GET == null || _usersData_ViewModel.UserPassword_GET == string.Empty)
-            {
-                OpenDialogWindow("Пожалуйста, введите пароль пользователя!");
-            }
-            else if (_usersData_ViewModel.RepeatUserPassword_GET == null
-                || _usersData_ViewModel.UserPassword_GET != _usersData_ViewModel.RepeatUserPassword_GET)
-            {
-                OpenDialogWindow("Введенные пароли не совпадают!");
-            }
-            else if(_usersData_ViewModel.UserPassword_GET != User_DataModel._userPassword 
-                || _usersData_ViewModel.RepeatUserPassword_GET != User_DataModel._userPassword)
-            {
-                OpenDialogWindow("Пароль введен неверно!\nПожалуйста, введите пароль от Вашей учетной записи");
-            }
-            else
-            {
-                SaveUsersData(_usersData_ViewModel.UserName, _usersData_ViewModel.UserLastName, _usersData_ViewModel.UserMiddleName, 
-                    _usersData_ViewModel.UserPosition, _usersData_ViewModel.UserPhone, _usersData_ViewModel.UserEmail, _usersData_ViewModel.UserPassword_GET);
-                
-            }
-        }
-
-        private void SaveUsersData(string _name, string _lastName, string _middleName, string _position, string _phone, string _email, string _password)
-        {
-            var user = context.User
-                 .Where(c => c.id_user == User_DataModel._idUser)
-                 .FirstOrDefault();
-            user.name = _name;
-            user.last_name = _lastName;
-            user.middle_name = _middleName;
-            user.position = _position;
-            user.phone = _phone;
-            user.user_login = _email;
-            user.user_password = _password;
-
-            try
-            {
-                context.SaveChanges();
-            }
-            catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
-            {
-                Exception raise = dbEx;
-                foreach (var validationErrors in dbEx.EntityValidationErrors)
-                {
-                    foreach (var validationError in validationErrors.ValidationErrors)
-                    {
-                        string message = string.Format("{0}:{1}", validationErrors.Entry.Entity.ToString(), validationError.ErrorMessage);
-                        //raise a new exception inserting the current one as the InnerException
-                        raise = new InvalidOperationException(message, raise);
-                    }
-                }
-                throw raise;
-            }
-
-            OpenDialogWindow("Ваши данные были успешно изменены!");
-        }
-
-
-        private void OpenDialogWindow(string textMessage)
-        {
-            Dialog_ViewModel messageBox_ViewModel = new Dialog_ViewModel(textMessage);
-            MessageBox_View messageBox_View = new MessageBox_View();
-            messageBox_View.Show();
-        }
-    }
-    #endregion
-
-    #region Класс-команда для загрузки страницы "Описание помещения"
-    internal class OpenDescriptionRoomViewCommand : MyCommand
-    {
-        public OpenDescriptionRoomViewCommand(UsersData_ViewModel usersData_ViewModel) : base(usersData_ViewModel) { }
-        public override bool CanExecute(object parameter) => true;
-        public override void Execute(object parameter) => LoadPage();
-
-        private void LoadPage()
-        {
-            DescriptionRoom_ViewModel descriptionRoom_ViewModel = new DescriptionRoom_ViewModel();
-            descriptionRoom_ViewModel.RoomNumber = Convert.ToString(_usersData_ViewModel.UserRoomNumber);
-            PageManager.MainFrame.Navigate(new DescriptionRoomPage_View());
-
-        }
-}
-    #endregion
-
-    #region Вспомогательный класс для команд
-    abstract class MyCommand : ICommand
-    {
-        protected UsersData_ViewModel _usersData_ViewModel;
-
-        public MyCommand(UsersData_ViewModel usersData_ViewModel)
-        {
-            _usersData_ViewModel = usersData_ViewModel;
-        }
-
-        public event EventHandler CanExecuteChanged;
-
-        public abstract bool CanExecute(object parameter);
-
-        public abstract void Execute(object parameter);
-    }
-    #endregion
 }

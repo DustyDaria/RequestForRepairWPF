@@ -1,6 +1,7 @@
 ﻿using RequestForRepairWPF.Data;
 using RequestForRepairWPF.Data.User;
 using RequestForRepairWPF.Infrastructure.Commands.Controls.Menu;
+using RequestForRepairWPF.Infrastructure.Commands.LoadView;
 using RequestForRepairWPF.Models.Controls.Menu;
 using RequestForRepairWPF.Services;
 using RequestForRepairWPF.ViewModels.Base;
@@ -207,7 +208,7 @@ namespace RequestForRepairWPF.ViewModels.Controls.Menu
             {
                 if (_openDescriptionRoomView == null)
                 {
-                    _openDescriptionRoomView = new OpenDescriptionRoomViewCommand(this);
+                    _openDescriptionRoomView = new Infrastructure.Commands.LoadView.OpenDescriptionRoomViewCommand(this);
                 }
                 return _openDescriptionRoomView;
             }
@@ -259,8 +260,6 @@ namespace RequestForRepairWPF.ViewModels.Controls.Menu
         }
         #endregion
 
-        
-
         #region Создание отчета  
         private ICommand _openFileReportView;
         public ICommand OpenFileReportView
@@ -279,126 +278,4 @@ namespace RequestForRepairWPF.ViewModels.Controls.Menu
         #endregion
 
     }
-
-    #region Классы для загрузки новых страниц
-    internal class OpenFileReportViewCommand : MyCommand
-    {
-        public OpenFileReportViewCommand(Ctrl_burgerMenu_ViewModel ctrl_Menu_ViewModel) : base(ctrl_Menu_ViewModel) { }
-        public override bool CanExecute(object parameter) => true;
-        public override void Execute(object parameter) => PageManager.MainFrame.Navigate(new FileReportPage_View());
-    }
-
-    internal class OpenMyRequestViewCommand : MyCommand
-    {
-        public OpenMyRequestViewCommand(Ctrl_burgerMenu_ViewModel ctrl_Menu_ViewModel) : base(ctrl_Menu_ViewModel) { }
-        public override bool CanExecute(object parameter) => true;
-        public override void Execute(object parameter) => PageManager.MainFrame.Navigate(new MyRequestPage_View());
-    }
-
-
-    internal class OpenAllRequestViewCommand : MyCommand
-    {
-        public OpenAllRequestViewCommand(Ctrl_burgerMenu_ViewModel ctrl_Menu_ViewModel) : base(ctrl_Menu_ViewModel) { }
-        public override bool CanExecute(object parameter) => true;
-        public override void Execute(object parameter) => PageManager.MainFrame.Navigate(new AllRequestsPage_View());
-    }
-
-    internal class OpenCreateRequestViewCommand : MyCommand
-    {
-        public OpenCreateRequestViewCommand(Ctrl_burgerMenu_ViewModel ctrl_Menu_ViewModel) : base(ctrl_Menu_ViewModel) { }
-        public override bool CanExecute(object parameter) => true;
-        public override void Execute(object parameter) => PageManager.MainFrame.Navigate(new CreateRequestPage_View());
-    }
-
-    internal class OpenDescriptionRoomViewCommand : MyCommand
-    {
-        public OpenDescriptionRoomViewCommand(Ctrl_burgerMenu_ViewModel ctrl_Menu_ViewModel) : base(ctrl_Menu_ViewModel) { }
-        public override bool CanExecute(object parameter) => true;
-        public override void Execute(object parameter) => PageManager.MainFrame.Navigate(new DescriptionRoomPage_View());
-    }
-
-    internal class OpenEditUserAccountViewCommand : MyCommand
-    {
-        UsersData_ViewModel _usersData_ViewModel = new UsersData_ViewModel();
-        public OpenEditUserAccountViewCommand(Ctrl_burgerMenu_ViewModel ctrl_Menu_ViewModel) : base(ctrl_Menu_ViewModel) { }
-        public override bool CanExecute(object parameter) => true;
-        public override void Execute(object parameter)
-        {
-            if (User_DataModel._idType == 1)
-            {
-                UpdateData();
-
-                PageManager.MainFrame.Navigate(new UserAccountPage_View());
-            }
-            else if(User_DataModel._idType == 2)
-            {
-                UpdateData();
-
-                PageManager.MainFrame.Navigate(new CustomerUserAccountPage_View());
-            }
-            else if(User_DataModel._idType == 3)
-            {
-                UpdateData();
-
-                PageManager.MainFrame.Navigate(new UserAccountPage_View());
-            }
-        }
-
-        private void UpdateData()
-        {
-            _usersData_ViewModel.UserLastName = User_DataModel._lastName;
-            _usersData_ViewModel.UserName = User_DataModel._name;
-            _usersData_ViewModel.UserMiddleName = User_DataModel._middleName;
-            _usersData_ViewModel.UserPosition = User_DataModel._position;
-            _usersData_ViewModel.UserPhone = User_DataModel._phone;
-        }
-    }
-
-    internal class OpenRegUserAccountViewCommand : MyCommand
-    {
-        public OpenRegUserAccountViewCommand(Ctrl_burgerMenu_ViewModel ctrl_Menu_ViewModel) : base(ctrl_Menu_ViewModel) { }
-        public override bool CanExecute(object parameter) => true;
-        public override void Execute(object parameter) => PageManager.MainFrame.Navigate(new UserRegistrationPage_View());
-    }
-
-    internal class OpenAllUsersViewCommand : MyCommand
-    {
-        public OpenAllUsersViewCommand(Ctrl_burgerMenu_ViewModel ctrl_Menu_ViewModel) : base(ctrl_Menu_ViewModel) { }
-        public override bool CanExecute(object parameter) => true;
-        public override void Execute(object parameter) => PageManager.MainFrame.Navigate(new AllUsersPage_View());
-    }
-
-    internal class OpenCustomersViewCommand : MyCommand
-    {
-        public OpenCustomersViewCommand(Ctrl_burgerMenu_ViewModel ctrl_Menu_ViewModel) : base(ctrl_Menu_ViewModel) { }
-        public override bool CanExecute(object parameter) => true;
-        public override void Execute(object parameter) => PageManager.MainFrame.Navigate(new CustomersPage_View());
-    }
-
-    internal class OpenExecutorsViewCommand : MyCommand
-    {
-        public OpenExecutorsViewCommand(Ctrl_burgerMenu_ViewModel ctrl_Menu_ViewModel) : base(ctrl_Menu_ViewModel) { }
-        public override bool CanExecute(object parameter) => true;
-        public override void Execute(object parameter) => PageManager.MainFrame.Navigate(new ExecutorsPage_View());
-    }
-    #endregion
-
-    #region Вспомогательный класс для команд
-    abstract class MyCommand : ICommand
-    {
-        protected Ctrl_burgerMenu_ViewModel _ctrlMenu_ViewModel;
-
-        public MyCommand(Ctrl_burgerMenu_ViewModel ctrlMenu_ViewModel)
-        {
-            _ctrlMenu_ViewModel = ctrlMenu_ViewModel;
-        }
-
-        public event EventHandler CanExecuteChanged;
-
-        public abstract bool CanExecute(object parameter);
-
-        public abstract void Execute(object parameter);
-    }
-    #endregion
-
 }

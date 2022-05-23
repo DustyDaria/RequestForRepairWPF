@@ -1,4 +1,5 @@
-﻿using RequestForRepairWPF.Models.Pages;
+﻿using RequestForRepairWPF.Infrastructure.Commands.Actions;
+using RequestForRepairWPF.Models.Pages;
 using RequestForRepairWPF.ViewModels.Base;
 using System;
 using System.Collections.Generic;
@@ -78,40 +79,4 @@ namespace RequestForRepairWPF.ViewModels.Pages
         }
         #endregion
     }
-
-    #region Класс для выполнения команды по загрузке данных
-    internal class LoadDescriptionRoomCommand : MyCommand
-    {
-        public LoadDescriptionRoomCommand(DescriptionRoom_ViewModel descriptionRoom_ViewModel) : base(descriptionRoom_ViewModel) { }
-        public override bool CanExecute(object parameter) => true;
-        public override void Execute(object parameter)
-        {
-            DescriptionRoom_Model _model = new DescriptionRoom_Model();
-            //_descriptionRoom_ViewModel.RoomNumber = Convert.ToString(_model.RoomNumber);
-            _descriptionRoom_ViewModel.ID_TypeRoom_URR = _model.ID_TypeRoom_URR;
-            //_descriptionRoom_ViewModel.TypeRoom = _model.TypeRoom;
-            _descriptionRoom_ViewModel.DescriptionRoom = _model.DescriptionRoom;
-            _descriptionRoom_ViewModel.CommentRoom = _model.CommentRoom;
-
-        }
-    }
-    #endregion
-
-    #region Вспомогательный класс для команд
-    abstract class MyCommand : ICommand
-    {
-        protected DescriptionRoom_ViewModel _descriptionRoom_ViewModel;
-
-        public MyCommand(DescriptionRoom_ViewModel descriptionRoom_ViewModel)
-        {
-            _descriptionRoom_ViewModel = descriptionRoom_ViewModel;
-        }
-
-        public event EventHandler CanExecuteChanged;
-
-        public abstract bool CanExecute(object parameter);
-
-        public abstract void Execute(object parameter);
-    }
-    #endregion
 }

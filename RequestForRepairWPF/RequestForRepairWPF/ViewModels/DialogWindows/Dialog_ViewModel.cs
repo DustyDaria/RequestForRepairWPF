@@ -1,4 +1,5 @@
 ﻿using RequestForRepairWPF.Infrastructure.Commands.Base;
+using RequestForRepairWPF.Infrastructure.Commands.Dialog;
 using RequestForRepairWPF.ViewModels.Base;
 using RequestForRepairWPF.Views.DialogWindows;
 using System;
@@ -94,39 +95,4 @@ namespace RequestForRepairWPF.ViewModels.DialogWindows
 
         #endregion
     }
-
-    #region Класс для команды "Подтверждение пользователя
-    internal class UserConfirmationCommand : MyCommand
-    {
-        public UserConfirmationCommand(Dialog_ViewModel dialog_ViewModel) : base(dialog_ViewModel) { }
-        public override bool CanExecute(object parameter) => true;
-        public override void Execute(object parameter) => UserConfirm();
-
-        private void UserConfirm()
-        {
-            _dialog_ViewModel.UserConfirmation = true;
-
-            System.Windows.Forms.Application.Restart();
-            System.Windows.Application.Current.Shutdown();
-        }
-    }
-    #endregion
-
-    #region Вспомогательный класс для команд
-    abstract class MyCommand : ICommand
-    {
-        protected Dialog_ViewModel _dialog_ViewModel;
-
-        public MyCommand(Dialog_ViewModel dialog_ViewModel)
-        {
-            _dialog_ViewModel = dialog_ViewModel;
-        }
-
-        public event EventHandler CanExecuteChanged;
-
-        public abstract bool CanExecute(object parameter);
-
-        public abstract void Execute(object parameter);
-    }
-    #endregion
 }

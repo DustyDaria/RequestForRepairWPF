@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using RequestForRepairWPF.Data;
 using RequestForRepairWPF.Data.User;
+using RequestForRepairWPF.Infrastructure.Commands.Actions;
 using RequestForRepairWPF.Models;
 using RequestForRepairWPF.Models.Pages;
 using RequestForRepairWPF.Models.Pages.ViewingEditDelete_UsersData;
@@ -74,7 +75,7 @@ namespace RequestForRepairWPF.ViewModels.Pages.ViewingEditDelete_UsersData
         {
             get
             {
-                _searchAllCommand = new SearchAllCommand(this);
+                _searchAllCommand = new SearchAllCommand2(this);
                 return _searchAllCommand;
 
             }
@@ -87,7 +88,7 @@ namespace RequestForRepairWPF.ViewModels.Pages.ViewingEditDelete_UsersData
         {
             get
             {
-                _updateDataAllCommand = new UpdateDataAllCommand(this);
+                _updateDataAllCommand = new UpdateDataAllCommand2(this);
                 return _updateDataAllCommand;
             }
         }
@@ -96,134 +97,4 @@ namespace RequestForRepairWPF.ViewModels.Pages.ViewingEditDelete_UsersData
 
         #endregion
     }
-
-    #region Класс-команда для поиска по полю
-    internal class SearchAllCommand : MyAllCommand
-    {
-
-        AllUsers_Model _model = new AllUsers_Model();
-        StringBuilder errors = new StringBuilder();
-
-        public SearchAllCommand(AllUsers_ViewModel allUsers_ViewModel) : base(allUsers_ViewModel) { }
-        public override bool CanExecute(object parameter) => true;
-        public override void Execute(object parameter) => Search();
-
-        private void Search()
-        {
-            if (string.IsNullOrEmpty(_allUsers_ViewModel.SelectedCriteriaSearch))
-                errors.AppendLine("Для поиска необходимо выбрать критерий!");
-            if (string.IsNullOrWhiteSpace(_allUsers_ViewModel.DataForSearch))
-                errors.AppendLine("А по каким данным мы проводим поиск? :D");
-
-            if (errors.Length > 0)
-            {
-                OpenDialogWindow(errors.ToString());
-                errors.Clear();
-                return;
-            }
-            else
-            {
-                User_DataModel.AllUsersID.Clear();
-                if (_allUsers_ViewModel.SelectedCriteriaSearch == _allUsers_ViewModel.ListCriteriaSearch[0])
-                {
-                    _allUsers_ViewModel.AllUsers = new BindableCollection<User_DataModel>
-                        (_model.GetPeople_All(_model.AllIdUsers_SearchLogin_all(_allUsers_ViewModel.DataForSearch)));
-
-                }
-                else if (_allUsers_ViewModel.SelectedCriteriaSearch == _allUsers_ViewModel.ListCriteriaSearch[1])
-                {
-                    _allUsers_ViewModel.AllUsers = new BindableCollection<User_DataModel>
-                        (_model.GetPeople_All(_model.AllIdUsers_SearchTypeOfAccount_all(_allUsers_ViewModel.DataForSearch)));
-                }
-                else if (_allUsers_ViewModel.SelectedCriteriaSearch == _allUsers_ViewModel.ListCriteriaSearch[2])
-                {
-                    _allUsers_ViewModel.AllUsers = new BindableCollection<User_DataModel>
-                        (_model.GetPeople_All(_model.AllIdUsers_SearchLastName_all(_allUsers_ViewModel.DataForSearch)));
-                }
-                else if (_allUsers_ViewModel.SelectedCriteriaSearch == _allUsers_ViewModel.ListCriteriaSearch[3])
-                {
-                    _allUsers_ViewModel.AllUsers = new BindableCollection<User_DataModel>
-                        (_model.GetPeople_All(_model.AllIdUsers_SearchName_all(_allUsers_ViewModel.DataForSearch)));
-                }
-                else if (_allUsers_ViewModel.SelectedCriteriaSearch == _allUsers_ViewModel.ListCriteriaSearch[4])
-                {
-                    _allUsers_ViewModel.AllUsers = new BindableCollection<User_DataModel>
-                        (_model.GetPeople_All(_model.AllIdUsers_SearchMiddleName_all(_allUsers_ViewModel.DataForSearch)));
-                }
-                else if (_allUsers_ViewModel.SelectedCriteriaSearch == _allUsers_ViewModel.ListCriteriaSearch[5])
-                {
-                    _allUsers_ViewModel.AllUsers = new BindableCollection<User_DataModel>
-                        (_model.GetPeople_All(_model.AllIdUsers_SearchPosition_all(_allUsers_ViewModel.DataForSearch)));
-                }
-                else if (_allUsers_ViewModel.SelectedCriteriaSearch == _allUsers_ViewModel.ListCriteriaSearch[6])
-                {
-                    _allUsers_ViewModel.AllUsers = new BindableCollection<User_DataModel>
-                        (_model.GetPeople_All(_model.AllIdUsers_SearchCategoryExecutors_all(_allUsers_ViewModel.DataForSearch)));
-                }
-                else if (_allUsers_ViewModel.SelectedCriteriaSearch == _allUsers_ViewModel.ListCriteriaSearch[7])
-                {
-                    _allUsers_ViewModel.AllUsers = new BindableCollection<User_DataModel>
-                        (_model.GetPeople_All(_model.AllIdUsers_SearchPhone_all(_allUsers_ViewModel.DataForSearch)));
-                }
-
-                if (_allUsers_ViewModel.AllUsers.Count == 0)
-                    errors.AppendLine("К сожалению, совпадений не найдено :(");
-
-                if (errors.Length > 0)
-                {
-                    OpenDialogWindow(errors.ToString());
-                    errors.Clear();
-                    return;
-                }
-
-            }
-        }
-
-        #region Открытие диалогового окна
-        private void OpenDialogWindow(string textMessage)
-        {
-            Dialog_ViewModel messageBox_ViewModel = new Dialog_ViewModel(textMessage);
-            MessageBox_View messageBox_View = new MessageBox_View();
-            messageBox_View.Show();
-        }
-        #endregion
-    }
-    #endregion
-
-    #region Класс-команда для обновления данных
-    internal class UpdateDataAllCommand : MyAllCommand
-    {
-        AllUsers_Model _model = new AllUsers_Model();
-
-        public UpdateDataAllCommand(AllUsers_ViewModel allUsers_ViewModel) : base(allUsers_ViewModel) { }
-        public override bool CanExecute(object parameter) => true;
-        public override void Execute(object parameter) => UpdateData();
-
-        private void UpdateData()
-        {
-            User_DataModel.AllUsersID.Clear();
-            _allUsers_ViewModel.AllUsers = new BindableCollection<User_DataModel>
-                (_model.GetPeople_All(_model.AllIdUsers_All));
-
-            _allUsers_ViewModel.SelectedCriteriaSearch = null;
-            _allUsers_ViewModel.DataForSearch = null;
-
-        }
-    }
-    #endregion
-
-    #region Вспомогательный класс для команд
-    abstract class MyAllCommand : ICommand
-    {
-        protected AllUsers_ViewModel _allUsers_ViewModel;
-        public MyAllCommand(AllUsers_ViewModel allUsers_ViewModel)
-        {
-            _allUsers_ViewModel = allUsers_ViewModel;
-        }
-        public event EventHandler CanExecuteChanged;
-        public abstract bool CanExecute(object parameter);
-        public abstract void Execute(object parameter);
-    }
-
-    #endregion
 }

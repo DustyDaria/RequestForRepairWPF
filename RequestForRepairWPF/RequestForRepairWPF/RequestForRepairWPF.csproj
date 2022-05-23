@@ -232,12 +232,55 @@
     <Compile Include="Entities\U_R_Room.cs">
       <DependentUpon>DB_RequestForRepairEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\Commands\Actions\AddRoomNumberCommand.cs" />
+    <Compile Include="Infrastructure\Commands\Actions\AllRequestHelpCommand.cs" />
+    <Compile Include="Infrastructure\Commands\Actions\CancelCommand.cs" />
+    <Compile Include="Infrastructure\Commands\Actions\CancelUserRegCommand.cs" />
+    <Compile Include="Infrastructure\Commands\Actions\DeleteRoomsNumberCommand.cs" />
+    <Compile Include="Infrastructure\Commands\Actions\LoadDescriptionRoomCommand.cs" />
+    <Compile Include="Infrastructure\Commands\Actions\LoadRegDataCommand.cs" />
+    <Compile Include="Infrastructure\Commands\Actions\LoadRequestDataCommand.cs" />
+    <Compile Include="Infrastructure\Commands\Actions\MyAllCommand.cs" />
+    <Compile Include="Infrastructure\Commands\Actions\MyCommand.cs" />
+    <Compile Include="Infrastructure\Commands\Actions\MyCusCommand.cs" />
+    <Compile Include="Infrastructure\Commands\Actions\MyExeCommand.cs" />
+    <Compile Include="Infrastructure\Commands\Actions\MyRegCommand.cs" />
+    <Compile Include="Infrastructure\Commands\Actions\MyRequestCommand.cs" />
+    <Compile Include="Infrastructure\Commands\Actions\MyRequestHelpCommand.cs" />
+    <Compile Include="Infrastructure\Commands\Actions\RegUserDataCommand.cs" />
+    <Compile Include="Infrastructure\Commands\Actions\SaveDataCommand.cs" />
+    <Compile Include="Infrastructure\Commands\Actions\SaveRequestDataCommand.cs" />
+    <Compile Include="Infrastructure\Commands\Actions\SearchAllCommand.cs" />
+    <Compile Include="Infrastructure\Commands\Actions\SearchAllCommand2.cs" />
+    <Compile Include="Infrastructure\Commands\Actions\SearchCusCommand.cs" />
+    <Compile Include="Infrastructure\Commands\Actions\SearchExeCommand.cs" />
+    <Compile Include="Infrastructure\Commands\Actions\SearchMyCommand.cs" />
+    <Compile Include="Infrastructure\Commands\Actions\UpdateDataAllCommand.cs" />
+    <Compile Include="Infrastructure\Commands\Actions\UpdateDataAllCommand2.cs" />
+    <Compile Include="Infrastructure\Commands\Actions\UpdateDataCusCommand.cs" />
+    <Compile Include="Infrastructure\Commands\Actions\UpdateDataExeCommand.cs" />
+    <Compile Include="Infrastructure\Commands\Actions\UpdateDataMyCommand.cs" />
     <Compile Include="Infrastructure\Commands\Base\Command.cs" />
     <Compile Include="Infrastructure\Commands\Base\DelegateCommand.cs" />
     <Compile Include="Infrastructure\Commands\Base\LambdaCommand.cs" />
     <Compile Include="Infrastructure\Commands\Controls\Menu\MenuLoad_Command.cs" />
+    <Compile Include="Infrastructure\Commands\Dialog\MyCommand.cs" />
+    <Compile Include="Infrastructure\Commands\Dialog\UserConfirmationCommand.cs" />
     <Compile Include="Infrastructure\Commands\GoBack.cs" />
     <Compile Include="Infrastructure\Commands\Controls\Password\LoginCommand.cs" />
+    <Compile Include="Infrastructure\Commands\LoadView\MyCommand.cs" />
+    <Compile Include="Infrastructure\Commands\LoadView\MyHelpCommand.cs" />
+    <Compile Include="Infrastructure\Commands\LoadView\OpenAllRequestViewCommand.cs" />
+    <Compile Include="Infrastructure\Commands\LoadView\OpenAllUsersViewCommand.cs" />
+    <Compile Include="Infrastructure\Commands\LoadView\OpenCreateRequestViewCommand.cs" />
+    <Compile Include="Infrastructure\Commands\LoadView\OpenCustomersViewCommand.cs" />
+    <Compile Include="Infrastructure\Commands\LoadView\OpenDescriptionRoom2ViewCommand.cs" />
+    <Compile Include="Infrastructure\Commands\LoadView\OpenDescriptionRoomViewCommand.cs" />
+    <Compile Include="Infrastructure\Commands\LoadView\OpenEditUserAccountViewCommand.cs" />
+    <Compile Include="Infrastructure\Commands\LoadView\OpenExecutorsViewCommand.cs" />
+    <Compile Include="Infrastructure\Commands\LoadView\OpenFileReportViewCommand.cs" />
+    <Compile Include="Infrastructure\Commands\LoadView\OpenMyRequestViewCommand.cs" />
+    <Compile Include="Infrastructure\Commands\LoadView\OpenRegUserAccountViewCommand.cs" />
     <Compile Include="Infrastructure\Commands\LogOut.cs" />
     <Compile Include="Models\Pages\DescriptionRoom_Model.cs" />
     <Compile Include="Models\Pages\UserAccount\UserRegistrationData_ViewModel.cs" />
@@ -319,10 +362,6 @@
     <Compile Include="Views\Pages\UserAccount\UserAccountPage_View.xaml.cs">
       <DependentUpon>UserAccountPage_View.xaml</DependentUpon>
     </Compile>
-    <Page Include="DictionaryStyles.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\Controls\Menu\Ctrl_burgerMenu_View.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
