@@ -179,6 +179,7 @@
     <Compile Include="Data\Room\SpecialEquipment_DataModel.cs" />
     <Compile Include="Data\Room\TechnicalEquipment_DataModel.cs" />
     <Compile Include="Data\Room\TypeRoom_DataModel.cs" />
+    <Compile Include="Data\User\AuthUser_DataModel.cs" />
     <Compile Include="Data\User\TypeOfAccount_DataModel.cs" />
     <Compile Include="Data\Room\U_R_Room_DataModel.cs" />
     <Compile Include="Entities\C__MigrationHistory.cs">

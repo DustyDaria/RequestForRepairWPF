@@ -805,7 +805,7 @@ namespace RequestForRepairWPF.Models.Pages.ViewingEditDelete_UsersData
 
             if (_idType == 1)
             {
-                _typeOfAccount = "Системный администратор";
+                _typeOfAccount = "Администратор";
             }
             else if (_idType == 2)
             {

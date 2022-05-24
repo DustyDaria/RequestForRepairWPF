@@ -27,13 +27,5 @@ namespace RequestForRepairWPF.Views.Windows
             MainFrame.Navigate(new AuthorizationPage_View());
             PageManager.MainFrame = MainFrame;
         }
-
-        private void MainFrame_ContentRendered(object sender, EventArgs e)
-        {
-            if (MainFrame.CanGoBack)
-                btn_Logout.Visibility = Visibility.Visible;
-            else
-                btn_Logout.Visibility = Visibility.Collapsed;
-        }
     }
 }

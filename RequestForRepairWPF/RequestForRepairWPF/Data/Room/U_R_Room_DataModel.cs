@@ -9,6 +9,10 @@ namespace RequestForRepairWPF.Data.Room
 {
     public class U_R_Room_DataModel
     {
+        /// <summary>
+        /// Избавиться от static - каша
+        /// </summary>
+
         public static int _userID { get; set; }
         public int userID { get; set; }
 
@@ -21,7 +25,15 @@ namespace RequestForRepairWPF.Data.Room
         public static List<int> _listAll_idRoom { get; set; } = new List<int>();
         public List<int> listAll_idRoom { get; set; } = new List<int>();
 
+        /// <summary>
+        /// Нахрена???
+        /// </summary>
         public static List<int> _listUserRoomsNumber { get; set; } = new List<int>();
         public List<int> listUserRoomsNumber { get; set; } = new List<int>();
+
+
+        /// связь к room 
+        /// 
+
     }
 }

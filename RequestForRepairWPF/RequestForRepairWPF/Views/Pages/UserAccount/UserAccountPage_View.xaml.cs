@@ -31,7 +31,7 @@ namespace RequestForRepairWPF.Views.Pages.UserAccount
             {
                 comboBox_category_executors.Visibility = Visibility.Visible;
             }
-            else if (_viewModel.UserType_string == "Системный администратор")
+            else if (_viewModel.UserType_string == "Администратор")
             {
                 comboBox_category_executors.Visibility = Visibility.Collapsed;
             }

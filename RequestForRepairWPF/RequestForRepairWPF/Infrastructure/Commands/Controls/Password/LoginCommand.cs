@@ -1,4 +1,5 @@
-﻿using RequestForRepairWPF.Infrastructure.Commands.Base;
+﻿using RequestForRepairWPF.Data.User;
+using RequestForRepairWPF.Infrastructure.Commands.Base;
 using RequestForRepairWPF.Models.Pages.UserAccount;
 using RequestForRepairWPF.Services;
 using RequestForRepairWPF.ViewModels.DialogWindows;
@@ -20,16 +21,7 @@ namespace RequestForRepairWPF.Infrastructure.Commands.Controls.Password
     public class LoginCommand : Command
     {
         private readonly UsersData_ViewModel _viewModel;
-        
-        public string _email, _password;
-        public string _name, _lastName, _middleName;
-        public string _position, _phone, _categoryExecutors;
-        public int _idUser, _roomNumber, _idType;
-        public List<string> _listUsersType;
-        public List<int> _listRoomsNumber;
-        public List<int> _listLibertyRoomsNumber;
-        public List<int> _listUserRoomsNumber;
-        public List<string> _listCategoryExecutors;
+        private UsersData_Model _model = new UsersData_Model();
 
         public LoginCommand(UsersData_ViewModel viewModel)
         {
@@ -40,36 +32,36 @@ namespace RequestForRepairWPF.Infrastructure.Commands.Controls.Password
 
         private void LogIn()
         {
-            _email = _viewModel.UserEmail;
-            _password = _viewModel.UserPassword_GET;
+            AuthUser_DataModel._userLogin = _viewModel.UserEmail;
+            AuthUser_DataModel._userPassword = _viewModel.UserPassword_GET;
 
-            if (_email == string.Empty || _email == null)
+            if (AuthUser_DataModel._userLogin == string.Empty 
+                || AuthUser_DataModel._userLogin == null)
             {
                 OpenDialogWindow("Пожалуйста, введите Ваш логин!");
             }
-            else if (_password == string.Empty || _password == null)
+            else if (AuthUser_DataModel._userPassword == string.Empty 
+                || AuthUser_DataModel._userPassword == null)
             {
                 OpenDialogWindow("Пожалуйста, введите Ваш пароль!");
             }
             else
             {
-                UsersData_Model _model = new UsersData_Model(_email, _password);
-
-                if(_model.CheckUserPass == _password && _model.CheckUserType == 1)
+                if(_model.CheckUserPass == AuthUser_DataModel._userPassword 
+                    && _model.CheckUserType == 1)
                 {
-                    AddUserDataToModel(_model);
                     AddUserDataToViewModel();
                     PageManager.MainFrame.Navigate(new UserAccountPage_View());
                 }
-                else if(_model.CheckUserPass == _password && _model.CheckUserType == 2)
+                else if(_model.CheckUserPass == AuthUser_DataModel._userPassword 
+                    && _model.CheckUserType == 2)
                 {
-                    AddUserDataToModel(_model);
                     AddUserDataToViewModel();
                     PageManager.MainFrame.Navigate(new CustomerUserAccountPage_View());
                 }
-                else if(_model.CheckUserPass == _password && _model.CheckUserType == 3)
+                else if(_model.CheckUserPass == AuthUser_DataModel._userPassword 
+                    && _model.CheckUserType == 3)
                 {
-                    AddUserDataToModel(_model);
                     AddUserDataToViewModel();
                     PageManager.MainFrame.Navigate(new UserAccountPage_View());
                 }
@@ -87,56 +79,35 @@ namespace RequestForRepairWPF.Infrastructure.Commands.Controls.Password
             messageBox_View.Show();
         }
 
-        private void AddUserDataToModel(UsersData_Model model)
-        {
-            _idUser = model.ID;
-            _idType = model.CheckUserType;
-            _lastName = model.LastName;
-            _name = model.Name;
-            _middleName = model.MiddleName;
-            _position = model.Position;
-            _phone = model.Phone;
-            _categoryExecutors = model.CategoryExecutors;
-            _roomNumber = model.RoomNumber;
-
-            _listUsersType = model.ListUsersType;
-            _listRoomsNumber = model.ListAllRommsNumber;
-            _listLibertyRoomsNumber = model.ListLiberyRoomsNumber;
-            _listUserRoomsNumber = model.ListUserRoomsNumber;
-            _listCategoryExecutors = model.ListCategoryExecutors;
-        }
-
         private void AddUserDataToViewModel()
         {
-            _viewModel.UserEmail = _email;
-            _viewModel.UserPassword_SET = _password;
-            _viewModel.Authorization_userID = _idUser;
-            _viewModel.UserType_int = _idType;
-            _viewModel.UserLastName = _lastName;
-            _viewModel.UserName = _name;
-            _viewModel.UserMiddleName = _middleName;
-            _viewModel.UserPosition = _position;
-            _viewModel.UserPhone = _phone;
-            _viewModel.ListCategoryExecutors = _listCategoryExecutors;
-            _viewModel.UserCategoryExecutors = _categoryExecutors;
-            _viewModel.ListUserRoomsNumber = _listUserRoomsNumber;
+            _viewModel.UserEmail = AuthUser_DataModel._userLogin;
+            _viewModel.UserPassword_SET = AuthUser_DataModel._userPassword;
+            _viewModel.Authorization_userID = _model.ID;
+            _viewModel.UserType_int = _model.TypeOfAccount_get;
+            _viewModel.UserLastName = _model.LastName;
+            _viewModel.UserName = _model.Name;
+            _viewModel.UserMiddleName = _model.MiddleName;
+            _viewModel.UserPosition = _model.Position;
+            _viewModel.UserPhone = _model.Phone;
+            _viewModel.ListCategoryExecutors = _model.ListCategoryExecutors;
+            _viewModel.UserCategoryExecutors = _model.CategoryExecutors;
+            _viewModel.ListUserRoomsNumber = _model.ListUserRoomsNumber;
 
-            if(_idType == 1)
+            switch(AuthUser_DataModel._idType)
             {
-                _viewModel.UserType_string = "Системный администратор";
+                case 1:
+                    _viewModel.UserType_string = "Администратор";
+                    break;
+                case 2:
+                    _viewModel.UserType_string = "Заказчик";
+                    break;
+                case 3:
+                    _viewModel.UserType_string = "Исполнитель";
+                    break;
             }
-            else if(_idType == 2)
-            {
-                _viewModel.UserType_string = "Заказчик";
-            }
-            else if(_idType == 3)
-            {
-                _viewModel.UserType_string = "Исполнитель";
-            }
-            _viewModel.ListUsersType = _listUsersType;
 
+            _viewModel.ListUsersType = _model.ListUsersType; 
         }
     }
-
-   
 }
