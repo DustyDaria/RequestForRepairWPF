@@ -25,63 +25,60 @@ namespace RequestForRepairWPF.Infrastructure.Commands.Actions
         private void SaveData()
         {
             #region  Получение логина зарегистрированного пользователя по совпадению с введенным (для проверки)
-            string userLogin = _usersData_ViewModel.UserEmail;
-            string checkedUserLogin = (from u in context.User
-                                       where u.user_login == userLogin
-                                       select u.user_login)
-                                       .FirstOrDefault();
+            var checkedUserLogin = context.User
+                .Where(c => c.user_login == _usersData_ViewModel.UserEmail)
+                .Select(c => c.user_login)
+                .FirstOrDefault();
             #endregion
-
-            if (_usersData_ViewModel.UserLastName == null || _usersData_ViewModel.UserLastName == string.Empty)
+            
+            if (String.IsNullOrEmpty(_usersData_ViewModel.UserLastName))
             {
                 OpenDialogWindow("Пожалуйста, введите фамилию пользователя!");
             }
-            else if (_usersData_ViewModel.UserName == null || _usersData_ViewModel.UserName == string.Empty)
+            else if (String.IsNullOrEmpty(_usersData_ViewModel.UserName))
             {
                 OpenDialogWindow("Пожалуйста, введите имя пользователя!");
             }
-            else if (_usersData_ViewModel.UserPosition == null || _usersData_ViewModel.UserPosition == string.Empty)
+            else if (String.IsNullOrEmpty(_usersData_ViewModel.UserPosition))
             {
                 OpenDialogWindow("Пожалуйста, введите должность пользователя!");
             }
-            else if (_usersData_ViewModel.UserPhone == null || _usersData_ViewModel.UserPhone == string.Empty)
+            else if (String.IsNullOrEmpty(_usersData_ViewModel.UserPhone))
             {
                 OpenDialogWindow("Пожалуйста, введите телефон пользователя!");
             }
-            else if (_usersData_ViewModel.UserPassword_GET == null || _usersData_ViewModel.UserPassword_GET == string.Empty)
+            else if (String.IsNullOrEmpty(_usersData_ViewModel.UserPassword_GET))
             {
                 OpenDialogWindow("Пожалуйста, введите пароль пользователя!");
             }
-            else if (_usersData_ViewModel.RepeatUserPassword_GET == null
+            else if (String.IsNullOrEmpty(_usersData_ViewModel.RepeatUserPassword_GET)
                 || _usersData_ViewModel.UserPassword_GET != _usersData_ViewModel.RepeatUserPassword_GET)
             {
                 OpenDialogWindow("Введенные пароли не совпадают!");
             }
-            else if (_usersData_ViewModel.UserPassword_GET != User_DataModel._userPassword
-                || _usersData_ViewModel.RepeatUserPassword_GET != User_DataModel._userPassword)
+            else if (_usersData_ViewModel.UserPassword_GET != AuthUser_DataModel._userPassword
+                || _usersData_ViewModel.RepeatUserPassword_GET != AuthUser_DataModel._userPassword)
             {
                 OpenDialogWindow("Пароль введен неверно!\nПожалуйста, введите пароль от Вашей учетной записи");
             }
             else
             {
-                SaveUsersData(_usersData_ViewModel.UserName, _usersData_ViewModel.UserLastName, _usersData_ViewModel.UserMiddleName,
-                    _usersData_ViewModel.UserPosition, _usersData_ViewModel.UserPhone, _usersData_ViewModel.UserEmail, _usersData_ViewModel.UserPassword_GET);
-
+                SaveUsersData();
             }
         }
 
-        private void SaveUsersData(string _name, string _lastName, string _middleName, string _position, string _phone, string _email, string _password)
+        private void SaveUsersData()
         {
             var user = context.User
-                 .Where(c => c.id_user == User_DataModel._idUser)
+                 .Where(c => c.id_user == AuthUser_DataModel._idUser)
                  .FirstOrDefault();
-            user.name = _name;
-            user.last_name = _lastName;
-            user.middle_name = _middleName;
-            user.position = _position;
-            user.phone = _phone;
-            user.user_login = _email;
-            user.user_password = _password;
+            user.name = _usersData_ViewModel.UserName;
+            user.last_name = _usersData_ViewModel.UserLastName;
+            user.middle_name = _usersData_ViewModel.UserMiddleName;
+            user.position = _usersData_ViewModel.UserPosition;
+            user.phone = _usersData_ViewModel.UserPhone;
+            user.user_login = _usersData_ViewModel.UserEmail;
+            user.user_password = _usersData_ViewModel.UserPassword_GET;
 
             try
             {
@@ -94,7 +91,8 @@ namespace RequestForRepairWPF.Infrastructure.Commands.Actions
                 {
                     foreach (var validationError in validationErrors.ValidationErrors)
                     {
-                        string message = string.Format("{0}:{1}", validationErrors.Entry.Entity.ToString(), validationError.ErrorMessage);
+                        string message = string.Format("{0}:{1}", validationErrors.Entry.Entity.ToString(), 
+                            validationError.ErrorMessage);
                         //raise a new exception inserting the current one as the InnerException
                         raise = new InvalidOperationException(message, raise);
                     }

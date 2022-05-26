@@ -25,7 +25,7 @@ namespace RequestForRepairWPF.Infrastructure.Commands.Controls.Menu
 
         private void MenuLoad()
         {
-            if(User_DataModel._idType == 1)
+            if(AuthUser_DataModel._idType == 1)
             {
                 _viewModel.listVisibility_EditUserAccount = true;
                 _viewModel.listVisibility_AllUsers = true;
@@ -36,7 +36,7 @@ namespace RequestForRepairWPF.Infrastructure.Commands.Controls.Menu
                 _viewModel.listVisibility_WatchArchiveRequest = true;
                 _viewModel.listVisibility_FileReport = true;
             }
-            else if(User_DataModel._idType == 2)
+            else if(AuthUser_DataModel._idType == 2)
             {
                 _viewModel.listVisibility_EditUserAccount = true;
                 _viewModel.listVisibility_DescriptionRoom = true;
@@ -47,7 +47,7 @@ namespace RequestForRepairWPF.Infrastructure.Commands.Controls.Menu
                 _viewModel.listVisibility_MyArchiveRequest = true;
                 _viewModel.listVisibility_FileReport = true;
             }
-            else if(User_DataModel._idType == 3)
+            else if(AuthUser_DataModel._idType == 3)
             {
                 _viewModel.listVisibility_EditUserAccount = true;
                 _viewModel.listVisibility_WatchRequest = true;

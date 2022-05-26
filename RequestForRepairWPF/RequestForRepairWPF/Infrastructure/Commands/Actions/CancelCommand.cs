@@ -22,19 +22,19 @@ namespace RequestForRepairWPF.Infrastructure.Commands.Actions
 
         private void Cancel()
         {
-            if (User_DataModel._idType == 1)
+            if (AuthUser_DataModel._idType == 1)
             {
                 UpdateData();
 
                 PageManager.MainFrame.Navigate(new UserAccountPage_View());
             }
-            else if (User_DataModel._idType == 2)
+            else if (AuthUser_DataModel._idType == 2)
             {
                 UpdateData();
 
                 PageManager.MainFrame.Navigate(new CustomerUserAccountPage_View());
             }
-            else if (User_DataModel._idType == 3)
+            else if (AuthUser_DataModel._idType == 3)
             {
                 UpdateData();
 
@@ -44,11 +44,11 @@ namespace RequestForRepairWPF.Infrastructure.Commands.Actions
 
         private void UpdateData()
         {
-            _usersData_ViewModel.UserLastName = User_DataModel._lastName;
-            _usersData_ViewModel.UserName = User_DataModel._name;
-            _usersData_ViewModel.UserMiddleName = User_DataModel._middleName;
-            _usersData_ViewModel.UserPosition = User_DataModel._position;
-            _usersData_ViewModel.UserPhone = User_DataModel._phone;
+            _usersData_ViewModel.UserLastName = AuthUser_DataModel._lastName;
+            _usersData_ViewModel.UserName = AuthUser_DataModel._name;
+            _usersData_ViewModel.UserMiddleName = AuthUser_DataModel._middleName;
+            _usersData_ViewModel.UserPosition = AuthUser_DataModel._position;
+            _usersData_ViewModel.UserPhone = AuthUser_DataModel._phone;
         }
     }
 }

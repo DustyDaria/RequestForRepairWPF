@@ -4,6 +4,7 @@ namespace RequestForRepairWPF.Data.User
 {
     public class User_DataModel
     {
+        /// избавиться от static, они здесь не нужны (каша)
         public static int _idUser { get; set; }
         public int idUser { get; set; }
 

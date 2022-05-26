@@ -19,10 +19,7 @@
         TextElement.FontSize="20"
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
-        FontFamily="{DynamicResource MaterialDesignFont}"
-        d:DesignHeight="800" d:DesignWidth="1080"
-      
-      Title="UserAccountPage_View">
+        FontFamily="{DynamicResource MaterialDesignFont}">
 
     <Page.DataContext>
         <vm:UsersData_ViewModel/>
