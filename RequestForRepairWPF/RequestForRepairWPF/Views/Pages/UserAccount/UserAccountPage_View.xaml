@@ -51,6 +51,7 @@
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
 
                 <TextBlock
@@ -132,7 +133,7 @@
                     materialDesign:HintAssist.Foreground="{DynamicResource SecondaryHueMidBrush}"
                     Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
                     materialDesign:HintAssist.Hint="Телефон"/>
-                
+
                 <TextBox
                     x:Name="textBox_user_login"
                     Margin="25"
@@ -151,17 +152,70 @@
                         Margin="25"
                         IsEnabled="{Binding ElementName=btn_Edit, Path=IsEnabled, Converter={StaticResource InverseBooleanConverter}}"
                         Grid.Row="2"
+                    x:Name="ctrl_pass"
                     materialDesign:HintAssist.Hint="Пароль" 
                         Grid.Column="1"
                         Password="{Binding Path=UserPassword_SET}"/>
 
-                <ctrlp:Ctrl_PasswordBox_View
-                        Margin="25"
-                        IsEnabled="{Binding ElementName=btn_Edit, Path=IsEnabled, Converter={StaticResource InverseBooleanConverter}}"
-                        Grid.Row="3"
-                        Grid.Column="1"
-                    materialDesign:HintAssist.Hint="Повторите пароль" 
-                        Password="{Binding Path=RepeatUserPassword_SET}"/>
+                <StackPanel
+                    Orientation="Horizontal"
+                    Grid.Row="3"
+                    Grid.Column="2"
+                    HorizontalAlignment="Center"
+                    >
+                    <CheckBox
+                Name="enabled_change_pass"
+                IsEnabled="{Binding ElementName=btn_Edit, Path=IsEnabled, Converter={StaticResource InverseBooleanConverter}}"
+                Margin="25"
+                        materialDesign:CheckBoxAssist.CheckBoxSize="50"
+                        HorizontalAlignment="Left"
+                IsChecked="{Binding Path=FlagChangePass}">
+                    </CheckBox>
+
+                    <materialDesign:Card
+                        HorizontalAlignment="Right"
+                        IsEnabled="{Binding IsChecked, ElementName=enabled_change_pass}"
+                        Background="{DynamicResource MaterialDesignBackground}"
+                    >
+
+                        <StackPanel>
+                            <Expander
+                          HorizontalAlignment="Stretch"
+                          Header="Изменить пароль">
+                                <StackPanel
+                            Orientation="Vertical"
+                            TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
+                            Margin="24,8,24,16">
+
+                                    <TextBlock
+                                        Style="{StaticResource MaterialDesignCaptionTextBlock}"
+                                        Text="В поле выше введите свой старый пароль"
+                                        IsEnabled="False"/>
+                                    <ctrlp:Ctrl_PasswordBox_View
+                                Margin="25"
+                                IsEnabled="{Binding IsChecked, ElementName=enabled_change_pass}"
+                        
+                            x:Name="ctrl_pass_new"
+                            materialDesign:HintAssist.Hint="Введите новый пароль" 
+                                Password="{Binding Path=NewUserPassword_SET}"/>
+                                    <ctrlp:Ctrl_PasswordBox_View
+                                Margin="25"
+                                IsEnabled="{Binding IsChecked, ElementName=enabled_change_pass}"
+                        
+                            x:Name="ctrl_pass_new_repeat"
+                            materialDesign:HintAssist.Hint="Повторите новый пароль" 
+                                Password="{Binding Path=NewUserPasswordRepeat_SET}"/>
+                                </StackPanel>
+                            </Expander>
+                            <Border
+                          Background="{DynamicResource MaterialDesignDivider}"
+                          Height="1"
+                          HorizontalAlignment="Stretch"
+                          SnapsToDevicePixels="True" />
+
+                        </StackPanel>
+                    </materialDesign:Card>
+                </StackPanel>
 
                 <ComboBox
                     x:Name="comboBox_type_of_account"
@@ -170,7 +224,7 @@
                     
                     Margin="25"
                     Grid.Column="1"
-                    Grid.Row="4"
+                    Grid.Row="5"
                     Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                     materialDesign:TextFieldAssist.HasClearButton="True"
                     materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource SecondaryHueMidBrush}"
@@ -191,7 +245,7 @@
                     Margin="25"
                     Grid.Column="1"
                     IsEnabled="False"
-                    Grid.Row="5"
+                    Grid.Row="6"
                     Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                     materialDesign:TextFieldAssist.HasClearButton="True"
                     materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource SecondaryHueMidBrush}"
@@ -214,7 +268,7 @@
                     Margin="25"
                     HorizontalAlignment="Left"
                     Grid.Column="1"
-                    Grid.Row="6"
+                    Grid.Row="7"
                     Content="Сохранить"
                     IsEnabled="{Binding ElementName=btn_Edit, Path=IsEnabled, Converter={StaticResource InverseBooleanConverter}}"
                     Command="{Binding Path=SaveDataCommand}"
@@ -232,7 +286,7 @@
                     Command="{Binding Path=CancelCommand}"
                     HorizontalAlignment="Right"
                     Grid.Column="1"
-                    Grid.Row="6"
+                    Grid.Row="7"
                     IsEnabled="{Binding ElementName=btn_Edit, Path=IsEnabled, Converter={StaticResource InverseBooleanConverter}}"
                     Content="Отмена"
                     Style="{StaticResource MaterialDesignFlatButton}"
@@ -249,7 +303,7 @@
                       Margin="100 25 25 25"
                                 HorizontalAlignment="Left"
                                 Grid.Column="0"
-                                Grid.Row="6"
+                                Grid.Row="7"
                                 Content="Редактировать"
                                 Style="{StaticResource MaterialDesignRaisedLightButton}"
                                 ToolTip="Resource name: MaterialDesignRaisedLightButton">
@@ -260,13 +314,13 @@
             </Grid>
 
         </ScrollViewer>
-        
+
         <!-- Бургер-меню -->
         <ctrlm:Ctrl_burgerMenu_View 
                 Grid.Row="0"
                 Grid.RowSpan="2"
                 Grid.Column="0"
-            MyVisibility="Visible"/>
+            MyVisibility="Visible" />
 
     </Grid>
 </Page>

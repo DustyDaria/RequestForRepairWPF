@@ -55,13 +55,13 @@ namespace RequestForRepairWPF.Infrastructure.Commands.Actions
             {
                 OpenDialogWindow("Пожалуйста, введите пароль пользователя!");
             }
-            else if (String.IsNullOrEmpty(_usersData_ViewModel.RepeatUserPassword_GET)
-                || _usersData_ViewModel.UserPassword_GET != _usersData_ViewModel.RepeatUserPassword_GET)
+            else if (String.IsNullOrEmpty(_usersData_ViewModel.NewUserPassword_GET)
+                || _usersData_ViewModel.UserPassword_GET != _usersData_ViewModel.NewUserPassword_GET)
             {
                 OpenDialogWindow("Введенные пароли не совпадают!");
             }
             else if (_usersData_ViewModel.UserPassword_GET != AuthUser_DataModel._userPassword
-                || _usersData_ViewModel.RepeatUserPassword_GET != AuthUser_DataModel._userPassword)
+                || _usersData_ViewModel.NewUserPassword_GET != AuthUser_DataModel._userPassword)
             {
                 OpenDialogWindow("Пароль введен неверно!\nПожалуйста, введите пароль от Вашей учетной записи");
             }

@@ -56,15 +56,36 @@ namespace RequestForRepairWPF.ViewModels.Pages.UserAccount
         }
         #endregion
 
-        #region Повторите пароль
-        private static string _repeatUserPassword;
-        public string RepeatUserPassword_SET
+        #region Новый пароль
+        private static string _newUserPassword;
+        public string NewUserPassword_SET
         {
-            set => Set(ref _repeatUserPassword, value);
+            set => Set(ref _newUserPassword, value);
         }
-        public string RepeatUserPassword_GET
+        public string NewUserPassword_GET
         {
-            get => _repeatUserPassword;
+            get => _newUserPassword;
+        }
+        #endregion
+
+        #region Повторите новый пароль
+        private static string _newUserPasswordRepeat;
+        public string NewUserPasswordRepeat_SET
+        {
+            set => Set(ref _newUserPasswordRepeat, value);
+        }
+        public string NewUserPasswordRepeat_GET
+        {
+            get => _newUserPasswordRepeat;
+        }
+        #endregion
+
+        #region Флаг на смену пароля
+        private static bool _flagChangePass;
+        public bool FlagChangePass
+        {
+            get => _flagChangePass;
+            set => Set(ref _flagChangePass, value);
         }
         #endregion
 

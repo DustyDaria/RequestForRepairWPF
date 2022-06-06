@@ -106,7 +106,7 @@ namespace RequestForRepairWPF.Infrastructure.Commands.Controls.Password
                     _viewModel.UserType_string = "Исполнитель";
                     break;
             }
-
+            
             _viewModel.ListUsersType = _model.ListUsersType; 
         }
     }
