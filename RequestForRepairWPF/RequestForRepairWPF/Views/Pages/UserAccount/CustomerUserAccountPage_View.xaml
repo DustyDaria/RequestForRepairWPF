@@ -11,15 +11,13 @@
         xmlns:cmd="clr-namespace:RequestForRepairWPF.Infrastructure.Commands" xmlns:ctrlp="clr-namespace:RequestForRepairWPF.Views.Controls.Password" xmlns:services="clr-namespace:RequestForRepairWPF.Services"
       mc:Ignorable="d"
         
+      xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
       TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="20"
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
-        FontFamily="{DynamicResource MaterialDesignFont}"
-        d:DesignHeight="800" d:DesignWidth="1080"
-      
-      Title="Личный кабинет">
+        FontFamily="{DynamicResource MaterialDesignFont}">
 
     <Page.DataContext>
         <vm:UsersData_ViewModel/>
@@ -113,18 +111,20 @@
                     VerticalAlignment="Top"
                     materialDesign:HintAssist.Hint="Должность" />
 
-                <TextBox
-                    x:Name="textBox_phone"
+                <xctk:MaskedTextBox x:Name="textBox_phone"
+                                    
                     Margin="100 25 25 25"
-                    materialDesign:HintAssist.Hint=" Телефон"
                     Grid.Column="0"
                     Grid.Row="5"
-                    IsEnabled="{Binding ElementName=btn_Edit, Path=IsEnabled, Converter={StaticResource InverseBooleanConverter}}"
+                    VerticalAlignment="Top"
+                    MaxLength="16"
+                             Mask="+7(000) 000-0000" 
                     Text="{Binding Path=UserPhone}"
+                    IsEnabled="{Binding ElementName=btn_Edit, Path=IsEnabled, Converter={StaticResource InverseBooleanConverter}}"
                     materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource SecondaryHueMidBrush}"
                     materialDesign:HintAssist.Foreground="{DynamicResource SecondaryHueMidBrush}"
                     Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
-                    VerticalAlignment="Top"/>
+                    materialDesign:HintAssist.Hint="Телефон"/>
 
                 <TextBox
                     x:Name="textBox_user_login"

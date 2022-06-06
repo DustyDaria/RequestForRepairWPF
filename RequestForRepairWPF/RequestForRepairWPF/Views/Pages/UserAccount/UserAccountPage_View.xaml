@@ -12,6 +12,7 @@
         xmlns:cmd="clr-namespace:RequestForRepairWPF.Infrastructure.Commands.Controls.Menu"
         xmlns:vm="clr-namespace:RequestForRepairWPF.ViewModels.Pages.UserAccount"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+      xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
       
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -117,13 +118,14 @@
                     VerticalAlignment="Top"
                     materialDesign:HintAssist.Hint="Должность" />
 
-                <TextBox
-                    x:Name="textBox_phone"
+                <xctk:MaskedTextBox x:Name="textBox_phone"
+                                    
                     Margin="100 25 25 25"
                     Grid.Column="0"
                     Grid.Row="5"
                     VerticalAlignment="Top"
                     MaxLength="16"
+                             Mask="+7(000) 000-0000" 
                     Text="{Binding Path=UserPhone}"
                     IsEnabled="{Binding ElementName=btn_Edit, Path=IsEnabled, Converter={StaticResource InverseBooleanConverter}}"
                     materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource SecondaryHueMidBrush}"
