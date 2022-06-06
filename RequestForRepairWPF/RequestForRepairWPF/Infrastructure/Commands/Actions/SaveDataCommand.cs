@@ -47,6 +47,10 @@ namespace RequestForRepairWPF.Infrastructure.Commands.Actions
             {
                 OpenDialogWindow("Пожалуйста, введите телефон пользователя!");
             }
+            else if (_usersData_ViewModel.UserPhone.Contains("_"))
+            {
+                OpenDialogWindow("Пожалуйста, заполните корректно телефон пользователя!");
+            }
             else if (String.IsNullOrEmpty(_usersData_ViewModel.UserPassword_GET))
             {
                 OpenDialogWindow("Пожалуйста, введите пароль пользователя!");
