@@ -30,45 +30,72 @@ namespace RequestForRepairWPF.Infrastructure.Commands.Actions
                 .Select(c => c.user_login)
                 .FirstOrDefault();
             #endregion
+
+            switch (_usersData_ViewModel.FlagChangePass)
+            {
+                case true:
+                    if (String.Compare(_usersData_ViewModel.NewUserPassword_GET,
+                        _usersData_ViewModel.NewUserPasswordRepeat_GET) != 0
+                        || String.IsNullOrEmpty(_usersData_ViewModel.NewUserPassword_GET))
+                        OpenDialogWindow("Вы хотите поменять пароль? Тогда введите в полях \"Введите новый пароль\" и \"Повторите новый пароль\" одно и то же.");
+                    else if (String.IsNullOrEmpty(_usersData_ViewModel.UserPassword_GET))
+                        OpenDialogWindow("Для подтверждения смены пароля необходимо ввести свой старый пароль!");
+                    else if (_usersData_ViewModel.UserPassword_GET != AuthUser_DataModel._userPassword)
+                        OpenDialogWindow("Пароль введен неверно!\nПожалуйста, введите пароль от Вашей учетной записи для подтверждения смены пароля.");
+                    else
+                        ChangeUsersPass();
+                break;
+                case false:
+                    if (String.IsNullOrEmpty(_usersData_ViewModel.UserLastName))
+                        OpenDialogWindow("Пожалуйста, введите фамилию пользователя!");
+                    else if (String.IsNullOrEmpty(_usersData_ViewModel.UserName))
+                        OpenDialogWindow("Пожалуйста, введите имя пользователя!");
+                    else if (String.IsNullOrEmpty(_usersData_ViewModel.UserPosition))
+                        OpenDialogWindow("Пожалуйста, введите должность пользователя!");
+                    else if (String.IsNullOrEmpty(_usersData_ViewModel.UserPhone))
+                        OpenDialogWindow("Пожалуйста, введите телефон пользователя!");
+                    else if (_usersData_ViewModel.UserPhone.Contains("_"))
+                        OpenDialogWindow("Пожалуйста, заполните корректно телефон пользователя!");
+                    else if (String.IsNullOrEmpty(_usersData_ViewModel.UserPassword_GET))
+                        OpenDialogWindow("Для подтверждения изменений необходим пароль!");
+                    else if (_usersData_ViewModel.UserPassword_GET != AuthUser_DataModel._userPassword)
+                        OpenDialogWindow("Пароль введен неверно!\nПожалуйста, введите пароль от Вашей учетной записи");
+                    else
+                        SaveUsersData();
+                break;
+            }
+
             
-            if (String.IsNullOrEmpty(_usersData_ViewModel.UserLastName))
+        }
+
+        private void ChangeUsersPass()
+        {
+            var user = context.User
+                 .Where(c => c.id_user == AuthUser_DataModel._idUser)
+                 .FirstOrDefault();
+            user.user_password = _usersData_ViewModel.NewUserPassword_GET;
+
+            try
             {
-                OpenDialogWindow("Пожалуйста, введите фамилию пользователя!");
+                context.SaveChanges();
             }
-            else if (String.IsNullOrEmpty(_usersData_ViewModel.UserName))
+            catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
             {
-                OpenDialogWindow("Пожалуйста, введите имя пользователя!");
+                Exception raise = dbEx;
+                foreach (var validationErrors in dbEx.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        string message = string.Format("{0}:{1}", validationErrors.Entry.Entity.ToString(),
+                            validationError.ErrorMessage);
+                        //raise a new exception inserting the current one as the InnerException
+                        raise = new InvalidOperationException(message, raise);
+                    }
+                }
+                throw raise;
             }
-            else if (String.IsNullOrEmpty(_usersData_ViewModel.UserPosition))
-            {
-                OpenDialogWindow("Пожалуйста, введите должность пользователя!");
-            }
-            else if (String.IsNullOrEmpty(_usersData_ViewModel.UserPhone))
-            {
-                OpenDialogWindow("Пожалуйста, введите телефон пользователя!");
-            }
-            else if (_usersData_ViewModel.UserPhone.Contains("_"))
-            {
-                OpenDialogWindow("Пожалуйста, заполните корректно телефон пользователя!");
-            }
-            else if (String.IsNullOrEmpty(_usersData_ViewModel.UserPassword_GET))
-            {
-                OpenDialogWindow("Пожалуйста, введите пароль пользователя!");
-            }
-            else if (String.IsNullOrEmpty(_usersData_ViewModel.NewUserPassword_GET)
-                || _usersData_ViewModel.UserPassword_GET != _usersData_ViewModel.NewUserPassword_GET)
-            {
-                OpenDialogWindow("Введенные пароли не совпадают!");
-            }
-            else if (_usersData_ViewModel.UserPassword_GET != AuthUser_DataModel._userPassword
-                || _usersData_ViewModel.NewUserPassword_GET != AuthUser_DataModel._userPassword)
-            {
-                OpenDialogWindow("Пароль введен неверно!\nПожалуйста, введите пароль от Вашей учетной записи");
-            }
-            else
-            {
-                SaveUsersData();
-            }
+
+            OpenDialogWindow("Ваш пароль был успешно изменен!");
         }
 
         private void SaveUsersData()
