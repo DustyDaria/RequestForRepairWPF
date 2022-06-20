@@ -23,9 +23,9 @@ namespace RequestForRepairWPF.ViewModels.Pages.UserAccount
     public class UsersData_ViewModel : ViewModel
     {
 
-        /// <summary> Получение ID авторизорованнного пользователя </summary>
-        #region Получение ID авторизорованнного пользователя
-        /// <summary> Получение ID авторизорованнного пользователя </summary>
+        /// <summary> Получение ID авторизованнного пользователя </summary>
+        #region Получение ID авторизованнного пользователя
+        /// <summary> Получение ID авторизованнного пользователя </summary>
 
         private static int _authorization_userID;
         public int Authorization_userID

@@ -278,6 +278,7 @@
     <Compile Include="Infrastructure\Commands\Base\Command.cs" />
     <Compile Include="Infrastructure\Commands\Base\DelegateCommand.cs" />
     <Compile Include="Infrastructure\Commands\Base\LambdaCommand.cs" />
+    <Compile Include="Infrastructure\Commands\Basic\KeyActivity.cs" />
     <Compile Include="Infrastructure\Commands\Controls\Menu\MenuLoad_Command.cs" />
     <Compile Include="Infrastructure\Commands\Dialog\MyCommand.cs" />
     <Compile Include="Infrastructure\Commands\Dialog\UserConfirmationCommand.cs" />
